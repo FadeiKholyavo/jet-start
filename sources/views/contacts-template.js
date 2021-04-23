@@ -6,6 +6,7 @@ import statuses from "../models/statuses";
 export default class ContactsTemplateView extends JetView {
 	config() {
 		return statuses.waitData.then(() => {
+           
 			const contactTemplate = {
 				cols: [
 					{
@@ -15,16 +16,8 @@ export default class ContactsTemplateView extends JetView {
 							"border-right": "1px solid transparent"
 						},
 						template(obj) {
-							return `<div class="contacts-template">
-                                        <div class="contacts-template_first-row">
-                                            <span class="contacts-template_name">${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}</span>
-                                        </div>
-                                        <div class="contacts-template_second-row">
-                                            <div class="contacts-template_photo">
-                                            ${(obj && obj.Photo && `<img src="${obj.Photo}" width="150">`) || `<span class="far fa-user"></span>`}
-                                            </div>
-                                            <div class="contacts-template_info">
-                                                <ul>
+                            const userName = `<span class="contacts-template_name">${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}</span>`;
+                            const userInfo = `  <ul>
                                                     <li><span class="fas fa-at"></span>${(obj && obj.Email) || "-"}</li>
                                                     <li><span class="fab fa-skype"></span>${(obj && obj.Skype) || "-"}</li>
                                                     <li><span class="fas fa-tags"></span>${(obj && obj.Job) || "-"}</li>
@@ -33,11 +26,24 @@ export default class ContactsTemplateView extends JetView {
                                                 <ul>
                                                     <li><span class="far fa-calendar-alt"></span>${(obj && obj.Birthday) || "-"}</li>
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
-                                                </ul>
+                                                </ul>`;
+                            const userPhoto =  `${(obj && obj.Photo && `<img src="${obj.Photo}" width="150">`) || `<span class="far fa-user"></span>`}`;
+							const userStatus = `<span class="contacts-template_status">${(obj && obj.StatusID && statuses.getItem(obj.StatusID).Value) || "-"}</span>`;
+                            
+                            return `<div class="contacts-template">
+                                        <div class="contacts-template_first-row">
+                                            ${userName}
+                                        </div>
+                                        <div class="contacts-template_second-row">
+                                            <div class="contacts-template_photo">
+                                                ${userPhoto}
+                                            </div>
+                                            <div class="contacts-template_info">
+                                                ${userInfo}
                                             </div>     
                                         </div>     
                                         <div class="contacts-template_third-row">
-                                            <span class="contacts-template_status">${(obj && obj.StatusID && statuses.getItem(obj.StatusID).Value) || "-"}</span>
+                                            ${userStatus}
                                         </div>
                                     </div> 
                                     </div>`;
