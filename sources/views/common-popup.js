@@ -7,11 +7,11 @@ import contacts from "../models/contacts";
 export default class CommonPopupView extends JetView {
 	constructor(app, name, settings, data, item) {
 		super(app, name);
-		this.settings = (webix.isArray(settings) && settings) || ["Set","Save"] ;
+		this.settings = (webix.isArray(settings) && settings) || ["Set", "Save"];
 		this.data = data;
 		this.item = item;
-        this.activityName = this.settings[0],
-        this.buttonName = this.settings[1] || this.settings[0]
+		this.activityName = this.settings[0];
+		this.buttonName = this.settings[1] || this.settings[0];
 	}
 
 	config() {
@@ -142,15 +142,16 @@ export default class CommonPopupView extends JetView {
 
 				const time = webix.i18n.dateFormatDate(formItem.Time);
 				const date = webix.i18n.dateFormatDate(formItem.Date);
-                if(!!time && !!date){
-                    formItem.DueDate = new Date(
-                        date.getFullYear(),
-                        date.getMonth(), date.getDate(),
-                        time.getHours(), time.getMinutes()
-                    );
-                }else{
-                    formItem.DueDate = new Date();
-                }
+				if (!!time && !!date) {
+					formItem.DueDate = new Date(
+						date.getFullYear(),
+						date.getMonth(), date.getDate(),
+						time.getHours(), time.getMinutes()
+					);
+				}
+				else {
+					formItem.DueDate = new Date();
+				}
 
 				if (data.exists(formItemId)) {
 					form.setDirty(false);
