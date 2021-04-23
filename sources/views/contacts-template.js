@@ -21,7 +21,7 @@ export default class ContactsTemplateView extends JetView {
                                         </div>
                                         <div class="contacts-template_second-row">
                                             <div class="contacts-template_photo">
-                                            ${(obj && obj.Photo && `<img src="${obj.Photo}" width="150">`) || "<span class=\"far fa-user\"></span>"}
+                                            ${(obj && obj.Photo && `<img src="${obj.Photo}" width="150">`) || `<span class="far fa-user"></span>`}
                                             </div>
                                             <div class="contacts-template_info">
                                                 <ul>

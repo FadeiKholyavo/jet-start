@@ -21,7 +21,7 @@ export default class TopView extends JetView {
 			width: 180,
 			layout: "y",
 			select: true,
-			template: "<span class=\"fas #icon#\"></span> <span class=\"item\">#value#</span> ",
+			template: `<span class="fas #icon#"></span> <span class="item">#value#</span>`,
 			data: [
 				{value: "Contacts", id: "contacts", icon: "fa-users"},
 				{value: "Activities", id: "activities", icon: "fa-calendar-alt"},
