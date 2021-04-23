@@ -142,12 +142,15 @@ export default class CommonPopupView extends JetView {
 
 				const time = webix.i18n.dateFormatDate(formItem.Time);
 				const date = webix.i18n.dateFormatDate(formItem.Date);
-				formItem.DueDate = new Date(
-					date.getFullYear(),
-					date.getMonth(), date.getDate(),
-					time.getHours(), time.getMinutes()
-				);
-
+                if(!!time && !!date){
+                    formItem.DueDate = new Date(
+                        date.getFullYear(),
+                        date.getMonth(), date.getDate(),
+                        time.getHours(), time.getMinutes()
+                    );
+                }else{
+                    formItem.DueDate = new Date();
+                }
 
 				if (data.exists(formItemId)) {
 					form.setDirty(false);
