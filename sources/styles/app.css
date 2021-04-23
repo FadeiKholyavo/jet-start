@@ -17,7 +17,6 @@
 .app_menu{
     margin-top: 0 !important;
     margin-left: 1px !important;
-    height: auto !important;
     width: auto !important;
 }
 .app_menu .webix_list_item{
