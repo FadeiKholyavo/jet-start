@@ -14,18 +14,38 @@ export default class ActivitiesView extends JetView {
 			css: "webix_data_border webix_header_border",
 			select: true,
 			columns: [
-				{id: "State", header: "", checkValue: "Close", uncheckValue: "Open", css: "activities_columns-center", template: "{common.checkbox()}", sort: "string", width: 40},
-				{id: "TypeID",
+				{
+                    id: "State", 
+                    header: "", 
+                    checkValue: "Close", 
+                    uncheckValue: "Open", 
+                    css: "activities_columns-center", 
+                    template: "{common.checkbox()}", 
+                    sort: "string", 
+                    width: 40},
+				{
+                    id: "TypeID",
 					header: [{text: "Activity type"}, {content: "selectFilter"}],
 					options: activitiesType,
 					sort: "string",
 					template(obj) {
 						return activitiesType.getItem(obj.TypeID).Value;
 					},
-					width: 150},
-				{id: "DueDate", header: [{text: "Due date"}, {content: "dateRangeFilter", inputConfig: {format: webix.Date.dateToStr("%j %F %Y")}}], sort: "date", format: webix.Date.dateToStr("%j %F %Y"), width: 150},
-				{id: "Details", header: [{text: "Details"}, {content: "textFilter"}], sort: "string", fillspace: true},
-				{id: "ContactID",
+					width: 150
+                },
+				{
+                    id: "DueDate", 
+                    header: [{text: "Due date"}, {content: "dateRangeFilter", 
+                    inputConfig: {format: webix.Date.dateToStr("%j %F %Y")}}], 
+                    sort: "date", format: webix.Date.dateToStr("%j %F %Y"), 
+                    width: 150},
+				{
+                    id: "Details", 
+                    header: [{text: "Details"}, {content: "textFilter"}], 
+                    sort: "string", 
+                    fillspace: true},
+				{
+                    id: "ContactID",
 					header: [{text: "Contact"}, {content: "selectFilter"}],
 					options: contacts,
 					sort: "text",
@@ -33,9 +53,20 @@ export default class ActivitiesView extends JetView {
 						const contact = contacts.getItem(obj.ContactID);
 						return `${contact.FirstName} ${contact.LastName}`;
 					},
-					width: 150},
-				{id: "Edit", header: "", css: "activities_columns-center", template: "{common.editIcon()}", width: 40},
-				{id: "Delete", header: "", css: "activities_columns-center", template: "{common.trashIcon()}", width: 40}
+					width: 150
+                },
+				{
+                    id: "Edit", 
+                    header: "", 
+                    css: "activities_columns-center", 
+                    template: "{common.editIcon()}", 
+                    width: 40},
+				{
+                    id: "Delete", 
+                    header: "", css: "activities_columns-center", 
+                    template: "{common.trashIcon()}", 
+                    width: 40
+                }
 			],
 			onClick: {
 				"wxi-trash": (e, id) => {
