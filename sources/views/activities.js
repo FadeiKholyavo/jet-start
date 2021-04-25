@@ -118,13 +118,7 @@ export default class ActivitiesView extends JetView {
 	init() {
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
         this.popup = this.ui(new CommonPopup(this.app, "", activities));
-		webix.promise.all([
-			activities.waitData,
-			contacts.waitData,
-			statuses.waitData
-		]).then(() => {
-			this.activitiesDatatatble.sync(activities);
-		});
+		this.activitiesDatatatble.sync(activities);   
 	}
 
 	deleteItem(tablelItemId) {
