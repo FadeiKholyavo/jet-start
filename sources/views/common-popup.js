@@ -5,13 +5,9 @@ import contacts from "../models/contacts";
 
 
 export default class CommonPopupView extends JetView {
-	constructor(app, name, settings, data, item) {
+	constructor(app, name, data) {
 		super(app, name);
-		this.settings = (webix.isArray(settings) && settings) || ["Set", "Save"];
 		this.data = data;
-		this.item = item;
-		this.activityName = this.settings[0];
-		this.buttonName = this.settings[1] || this.settings[0];
 	}
 
 	config() {
@@ -101,7 +97,6 @@ export default class CommonPopupView extends JetView {
 				ContactID: webix.rules.isNotEmpty
 			}
 		};
-
 		const popup = {
 			view: "window",
 			position: "center",
@@ -124,7 +119,12 @@ export default class CommonPopupView extends JetView {
 		}
 	}
 
-	showWindow() {
+	showWindow(settings, item) {
+    
+        this.activityName = (settings && "Edit") || "Add";
+		this.buttonName = (settings && "Save") || "Add";
+        this.item = item;
+        this.refresh();
 		this.getRoot().show();
 	}
 

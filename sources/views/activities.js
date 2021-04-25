@@ -78,7 +78,7 @@ export default class ActivitiesView extends JetView {
 				},
 				"wxi-pencil": (e, id) => {
 					const item = activities.getItem(id);
-					this.ui(new CommonPopup(this.app, "", ["Edit", "Save"], activities, item)).showWindow();
+                    this.popup.showWindow(id, item);
 				}
 			}
 		};
@@ -95,7 +95,7 @@ export default class ActivitiesView extends JetView {
 				right: 10
 			},
 			click: () => {
-				this.ui(new CommonPopup(this.app, "", ["Add"], activities)).showWindow();
+                this.popup.showWindow(null);
 			}
 		};
 
@@ -117,6 +117,7 @@ export default class ActivitiesView extends JetView {
 
 	init() {
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
+        this.popup = this.ui(new CommonPopup(this.app, "", activities));
 		webix.promise.all([
 			activities.waitData,
 			contacts.waitData,
