@@ -29,7 +29,7 @@ export default class ActivitiesView extends JetView {
 					options: activitiesType,
 					sort: "string",
 					template(obj) {
-						return (obj && obj.TypeID && activitiesType.getItem(obj.TypeID).Value) || "Status" ;
+						return (obj && obj.TypeID && activitiesType.getItem(obj.TypeID).Value) || "Status";
 					},
 					width: 150
 				},
@@ -40,7 +40,7 @@ export default class ActivitiesView extends JetView {
 					sort: "date",
 					format: webix.Date.dateToStr("%j %F %Y"),
 					width: 150
-                },
+				},
 				{
 					id: "Details",
 					header: [{text: "Details"}, {content: "textFilter"}],
