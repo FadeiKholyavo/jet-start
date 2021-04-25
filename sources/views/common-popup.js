@@ -84,7 +84,7 @@ export default class CommonPopupView extends JetView {
 									align: "right",
 									width: 100,
 									click: () => {
-										this.getRoot().hide();
+										this.hideWindow();
 									}
 								}
 							]
@@ -127,7 +127,14 @@ export default class CommonPopupView extends JetView {
         this.refresh();
 		this.getRoot().show();
 	}
+    hideWindow() {
+        const form = this.form;
 
+        form.clear();
+        form.clearValidation();
+
+        this.getRoot().hide();
+    }
 	saveData() {
 		const form = this.form;
 		const data = this.data;
@@ -166,8 +173,7 @@ export default class CommonPopupView extends JetView {
 					type: "success",
 					expire: 1000
 				});
-
-				this.getRoot().hide();
+                this.hideWindow();
 			}
 			else {
 				webix.message({
