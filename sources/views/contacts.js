@@ -63,9 +63,13 @@ export default class ContactsView extends JetView {
 	init() {
 		this.contactsList = this.$$("contactsList");
 		this.contactsList.sync(contacts);
+		this.addButton = this.$$("addButton");
 	}
 	ready(){
         this.show("contacts-template");
+		if(this.addButton.isEnabled()){
+			this.addButton.enable();
+		}	
     }
 	urlChange() {
 		const id = this.getParam("user");
