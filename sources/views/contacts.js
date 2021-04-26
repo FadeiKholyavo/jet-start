@@ -67,7 +67,7 @@ export default class ContactsView extends JetView {
 	}
 	ready(){
         this.show("contacts-template");
-		if(this.addButton.isEnabled()){
+		if(!this.addButton.isEnabled()){
 			this.addButton.enable();
 		}	
     }
