@@ -90,7 +90,7 @@ export default class ContactsTemplateView extends JetView {
 	}
 
 	urlChange() {
-		const id = this.getParam("user");
+		const id = this.getParam("user", true);
 		contacts.waitData.then(() => {
 			if (!!id && contacts.exists(id)) {
 				this.contactsTemplate.parse(contacts.getItem(id));

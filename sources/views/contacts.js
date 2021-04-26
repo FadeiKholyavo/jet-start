@@ -38,7 +38,7 @@ export default class ContactsView extends JetView {
 		const ui = {
 			cols: [
 				contactsList,
-				ContactsTemplate
+				{$subview: true}
 			]
 		};
 		return ui;
@@ -48,7 +48,9 @@ export default class ContactsView extends JetView {
 		this.contactsList = this.$$("contactsList");
 		this.contactsList.sync(contacts);
 	}
-
+	ready(){
+        this.show("contacts-template");
+    }
 	urlChange() {
 		const id = this.getParam("user");
 		contacts.waitData.then(() => {
