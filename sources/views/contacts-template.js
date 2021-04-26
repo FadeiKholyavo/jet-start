@@ -72,7 +72,10 @@ export default class ContactsTemplateView extends JetView {
 										css: "btn",
 										type: "icon",
 										icon: "fas fa-edit",
-										autowidth: true
+										autowidth: true,
+										click:()=>{
+                                            this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`)
+                                        }
 									}
 								]
 							},

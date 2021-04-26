@@ -130,7 +130,10 @@ export default class ContactsFormView extends JetView {
                     label: "Cancel",
                     css: "btn",
                     align: "right",
-                    width: 100
+                    width: 100,
+                    click:()=>{
+                        this.show("contacts-template")
+                    }
                 }
             ]                                       
         }
