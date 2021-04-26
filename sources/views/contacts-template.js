@@ -90,8 +90,10 @@ export default class ContactsTemplateView extends JetView {
 	}
 	urlChange() {
 		const id = this.getParam("user");
-		if (!!id && contacts.exists(id)) {
-			this.contactsTemplate.parse(contacts.getItem(id));
-		}
+        contacts.waitData.then(()=>{
+            if (!!id && contacts.exists(id)) {
+                this.contactsTemplate.parse(contacts.getItem(id));
+            }
+        })
 	}
 }
