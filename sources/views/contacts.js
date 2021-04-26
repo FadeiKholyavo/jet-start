@@ -1,7 +1,6 @@
 import {JetView} from "webix-jet";
 
 import contacts from "../models/contacts";
-import ContactsTemplate from "./contacts-template";
 
 export default class ContactsView extends JetView {
 	config() {
@@ -49,7 +48,7 @@ export default class ContactsView extends JetView {
 		this.contactsList.sync(contacts);
 	}
 	ready(){
-        this.show("contacts-template");
+        this.show("contacts-form");
     }
 	urlChange() {
 		const id = this.getParam("user");
