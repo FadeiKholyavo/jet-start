@@ -247,21 +247,24 @@ export default class ContactsFormView extends JetView {
 				
                 formItem.Birthday = this.parser(formItem.Birthday || new Date());
                 formItem.StartDate = this.parser(formItem.StartDate || new Date());	
-
-				if (data.exists(formItemId)) {
-					form.setDirty(false);
-					data.updateItem(formItemId, formItem);
-				}
-				else {
-					data.add(formItem);
-				}
-
-				webix.message({
-					text: "Validation is succsessful",
-					type: "success",
-					expire: 1000
-				});
-                this.closeForm();
+                contacts.waitSave(()=>{
+                    if (data.exists(formItemId)) {
+                        form.setDirty(false);
+                        data.updateItem(formItemId, formItem);
+                    }
+                    else {
+                        data.add(formItem);
+                    }
+    
+                    webix.message({
+                        text: "Validation is succsessful",
+                        type: "success",
+                        expire: 1000
+                    })
+                }).then(()=>{
+                    this.closeForm()
+                });
+                
 			}
 			else {
 				webix.message({
