@@ -55,6 +55,11 @@
     line-height: 45px;
     overflow: hidden;
 }
+.contacts-template_photo-big{
+    width: 250px;
+    height: 250px;
+    font-size: 250px;
+}
 .contacts-template_info{
     display: flex;
     font-size: 16px;
