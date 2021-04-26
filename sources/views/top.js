@@ -2,49 +2,59 @@ import {JetView, plugins} from "webix-jet";
 
 export default class TopView extends JetView {
 	config() {
-		let header = {
-			type: "header", template: this.app.config.name, css: "webix_header app_header"
+		const header = {
+			view: "template",
+			type: "header",
+			localId: "header",
+			template: "#page#",
+			css: "webix_header app_header",
+			data: {page: ""}
 		};
 
-		let menu = {
+		const menu = {
 			view: "menu",
-			id: "top:menu",
+			localId: "top:menu",
 			css: "app_menu",
 			width: 180,
 			layout: "y",
 			select: true,
-			template: "<span class='webix_icon #icon#'></span> #value# ",
+			template: "<span class=\"fas #icon#\"></span> <span class=\"item\">#value#</span>",
 			data: [
-				{value: "Dashboard", id: "start", icon: "wxi-columns"},
-				{value: "Data", id: "data", icon: "wxi-pencil"}
-			]
-		};
-
-		let ui = {
-			type: "clean",
-			paddingX: 5,
-			css: "app_layout",
-			cols: [
-				{
-					paddingX: 5,
-					paddingY: 10,
-					rows: [{css: "webix_shadow_medium", rows: [header, menu]}]
-				},
-				{
-					type: "wide",
-					paddingY: 10,
-					paddingX: 5,
-					rows: [
-						{$subview: true}
-					]
+				{value: "Contacts", id: "contacts", icon: "fa-users"},
+				{value: "Activities", id: "activities", icon: "fa-calendar-alt"},
+				{value: "Settings", id: "settings", icon: "fa-cogs"}
+			],
+			on: {
+				onAfterSelect: () => {
+					const value = this.menu.getSelectedItem().value;
+					this.header.setValues({page: value});
 				}
-			]
+			}
 		};
 
+		const ui = {
+			rows: [
+				header,
+				{
+					cols: [
+						{
+							paddingX: 5,
+							paddingY: 10,
+							rows: [menu]
+						},
+						{
+							$subview: true
+						}
+					]}
+			]
+
+		};
 		return ui;
 	}
 
 	init() {
 		this.use(plugins.Menu, "top:menu");
+		this.header = this.$$("header");
+		this.menu = this.$$("top:menu");
 	}
 }
