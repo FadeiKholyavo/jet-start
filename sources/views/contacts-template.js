@@ -119,7 +119,7 @@ export default class ContactsTemplateView extends JetView {
 					if(contacts.getFirstId()){
 						this.getParentView().contactsList.select(contacts.getFirstId());
 					}else{
-						this.show("/top/contacts");
+						this.show("contacts-form?action=Add new");
 					}
 			})
 	}

@@ -131,6 +131,7 @@ export default class ContactsFormView extends JetView {
                 {
                     view: "button",
                     label: "Cancel",
+                    localId: "cancelButton",
                     css: "btn",
                     align: "right",
                     width: 100,
@@ -212,7 +213,8 @@ export default class ContactsFormView extends JetView {
     init(){
         this.form = this.$$("form");
         this.header = this.$$("header");
-        this.actionButton = this.$$("actButton")
+        this.actionButton = this.$$("actButton");
+        this.cancelButton = this.$$("cancelButton");
         this.action = this.getParam("action") || "Set";
         this.header.setValues({action: this.action});
         this.actionButton.setValue((this.action == "Edit" && "Save") || "Add");
@@ -229,6 +231,9 @@ export default class ContactsFormView extends JetView {
 			if (!!id && contacts.exists(id)) {
 				this.form.setValues(contacts.getItem(id));
 			}
+            if(!contacts.getFirstId()){
+                this.cancelButton.hide();
+            }
         })
 	}
     saveData() {
