@@ -2,6 +2,7 @@ import {JetView} from "webix-jet";
 
 import contacts from "../models/contacts";
 import statuses from "../models/statuses";
+import activities from "../models/activities";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
@@ -51,7 +52,7 @@ export default class ContactsTemplateView extends JetView {
 					{
 						css: {
 							"border-left": "1px solid transparent",
-							padding: "30px 0 0 0"
+							"padding": "30px 0 0 0"
 						},
 						rows: [
 							{
@@ -64,7 +65,10 @@ export default class ContactsTemplateView extends JetView {
 										css: "btn",
 										type: "icon",
 										icon: "fas fa-trash-alt",
-										autowidth: true
+										autowidth: true,
+										click: ()=>{
+											this.deleteContact();
+										}
 									},
 									{
 										view: "button",
@@ -74,7 +78,7 @@ export default class ContactsTemplateView extends JetView {
 										icon: "fas fa-edit",
 										autowidth: true,
 										click:()=>{
-                                            this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`)
+                                            this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`);
                                         }
 									}
 								]
@@ -99,5 +103,24 @@ export default class ContactsTemplateView extends JetView {
 				this.contactsTemplate.parse(contacts.getItem(id));
 			}
 		});
+	}
+	deleteContact(){
+		webix.confirm({
+			title: "User deleting",
+			text: "Do you really want to delete this contact"
+		}).then(()=>{
+					const contactId = contacts.getItem(this.getParam("user", true)).id;
+					contacts.remove(contactId);
+					activities.find((obj)=>{
+						return obj.ContactID == contactId;
+					}).forEach((obj)=>{
+						activities.remove(obj.id);
+					})
+					if(contacts.getFirstId()){
+						this.getParentView().contactsList.select(contacts.getFirstId());
+					}else{
+						this.show("/top/contacts");
+					}
+			})
 	}
 }

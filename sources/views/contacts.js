@@ -79,3 +79,4 @@ export default class ContactsView extends JetView {
 		});
 	}
 }
+	
