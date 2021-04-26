@@ -10,7 +10,7 @@ export default class ContactsFormView extends JetView {
 			type: "header",
 			localId: "header",
 			template: "#action# contact",
-			css: "webix_header app_header", 
+			css: "webix_header app_header app_header-big", 
             data: {action:""}       
 		};
 
