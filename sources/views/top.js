@@ -8,9 +8,7 @@ export default class TopView extends JetView {
 			localId: "header",
 			template: "#page#",
 			css: "webix_header app_header",
-			data: [
-				{page: ""}
-			]
+			data: {page: ""}
 		};
 
 		const menu = {
@@ -25,7 +23,13 @@ export default class TopView extends JetView {
 				{value: "Contacts", id: "contacts", icon: "fa-users"},
 				{value: "Activities", id: "activities", icon: "fa-calendar-alt"},
 				{value: "Settings", id: "settings", icon: "fa-cogs"}
-			]
+			],
+			on: {
+				"onAfterSelect": ()=>{
+					const value = this.menu.getSelectedItem().value;
+					this.header.setValues({ page: value }) 
+				}
+			}
 		};
 
 		const ui = {
@@ -51,10 +55,6 @@ export default class TopView extends JetView {
 	init() {
 		this.use(plugins.Menu, "top:menu");
 		this.header = this.$$("header");
-	}
-
-	urlChange(view, url) {
-		this.header.data.page = (url[1] && url[1].page) || "CRM";
-		this.header.refresh();
+		this.menu = this.$$("top:menu");
 	}
 }
