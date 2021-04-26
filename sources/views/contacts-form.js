@@ -123,7 +123,10 @@ export default class ContactsFormView extends JetView {
                     label: "",
                     css: "btn",
                     align: "right",
-                    width: 100
+                    width: 100,
+                    click: () => {
+                        this.saveData();
+                    }
                 },
                 {
                     view: "button",
@@ -132,7 +135,7 @@ export default class ContactsFormView extends JetView {
                     align: "right",
                     width: 100,
                     click:()=>{
-                        this.show("contacts-template")
+                        this.closeForm();
                     }
                 }
             ]                                       
@@ -213,6 +216,7 @@ export default class ContactsFormView extends JetView {
         this.action = this.getParam("action") || "Set";
         this.header.setValues({action: this.action});
         this.actionButton.setValue((this.action == "Edit" && "Save") || "Add");
+        this.parser = webix.Date.dateToStr("%Y-%m-%d");
     }
     urlChange() {
         const id = this.getParam("user");
@@ -224,5 +228,54 @@ export default class ContactsFormView extends JetView {
 				this.form.setValues(contacts.getItem(id));
 			}
         })
+	}
+    saveData() {
+		const form = this.form;
+		const data = contacts;
+        
+		if (form.validate()) {
+			const formItem = form.getValues();
+			const formItemId = formItem.id;
+			if (form.isDirty()) {
+				//Protection against XSS
+                const unKeys = ["Birthday", "StartDate", "StatusID", "id", "value", "Photo"];
+                Object.keys(formItem).filter(key =>{
+                    return unKeys.indexOf(key) == -1;
+                })
+				
+                formItem.Birthday = this.parser(formItem.Birthday || new Date());
+                formItem.StartDate = this.parser(formItem.StartDate || new Date());	
+
+				if (data.exists(formItemId)) {
+					form.setDirty(false);
+					data.updateItem(formItemId, formItem);
+				}
+				else {
+					data.add(formItem);
+				}
+
+				webix.message({
+					text: "Validation is succsessful",
+					type: "success",
+					expire: 1000
+				});
+                this.closeForm();
+			}
+			else {
+				webix.message({
+					text: "You have not edited the data",
+					type: "info",
+					expire: 1000
+				});
+			}
+		}
+	}
+    closeForm() {
+		const form = this.form;
+
+		form.clear();
+		form.clearValidation();
+
+        this.show("contacts-template");
 	}
 }
