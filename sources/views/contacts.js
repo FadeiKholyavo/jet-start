@@ -33,10 +33,27 @@ export default class ContactsView extends JetView {
 				}
 			}
 		};
+		const addButton = {
+            view: "button", 
+			localId: "addButton",
+			label: "Add contact",
+			type: "icon",
+			icon: "fas fa-plus-square",
+            css: "btn",
+            click: ()=>{
+                this.show("contacts-form?action=Add new");
+            }
+        }
 
 		const ui = {
 			cols: [
-				contactsList,
+				{
+					rows:[
+                        contactsList,
+                        addButton,
+                        {height:10}
+                    ]
+				},
 				{$subview: true}
 			]
 		};
@@ -48,7 +65,7 @@ export default class ContactsView extends JetView {
 		this.contactsList.sync(contacts);
 	}
 	ready(){
-        this.show("contacts-form");
+        this.show("contacts-template");
     }
 	urlChange() {
 		const id = this.getParam("user");

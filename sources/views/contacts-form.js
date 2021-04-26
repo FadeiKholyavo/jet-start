@@ -111,7 +111,7 @@ export default class ContactsFormView extends JetView {
         
         const bottomButttons = {
             padding:{
-                top: 250,
+                top: 220,
             },
             margin: 30,
             borderless: true,
