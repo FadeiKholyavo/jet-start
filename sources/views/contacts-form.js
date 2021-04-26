@@ -206,4 +206,18 @@ export default class ContactsFormView extends JetView {
 
 		return ui	
 	}
+    init(){
+        this.form = this.$$("form");
+    }
+    urlChange() {
+        const id = this.getParam("user");
+        webix.promise.all([
+            contacts.waitData,
+            statuses.waitData
+        ]).then(()=>{
+			if (!!id && contacts.exists(id)) {
+				this.form.setValues(contacts.getItem(id));
+			}
+        })
+	}
 }
