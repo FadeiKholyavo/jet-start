@@ -120,21 +120,22 @@ export default class CommonPopupView extends JetView {
 	}
 
 	showWindow(settings, item) {
-    
-        this.activityName = (settings && "Edit") || "Add";
+		this.activityName = (settings && "Edit") || "Add";
 		this.buttonName = (settings && "Save") || "Add";
-        this.item = item;
-        this.refresh();
+		this.item = item;
+		this.refresh();
 		this.getRoot().show();
 	}
-    hideWindow() {
-        const form = this.form;
 
-        form.clear();
-        form.clearValidation();
+	hideWindow() {
+		const form = this.form;
 
-        this.getRoot().hide();
-    }
+		form.clear();
+		form.clearValidation();
+
+		this.getRoot().hide();
+	}
+
 	saveData() {
 		const form = this.form;
 		const data = this.data;
@@ -173,7 +174,7 @@ export default class CommonPopupView extends JetView {
 					type: "success",
 					expire: 1000
 				});
-                this.hideWindow();
+				this.hideWindow();
 			}
 			else {
 				webix.message({

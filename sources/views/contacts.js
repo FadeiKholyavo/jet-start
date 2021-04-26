@@ -51,13 +51,13 @@ export default class ContactsView extends JetView {
 
 	urlChange() {
 		const id = this.getParam("user");
-        contacts.waitData.then(()=>{
-            if (!!id && contacts.exists(id)) {
-                this.contactsList.select(id);
-            }
-            else {
-                this.contactsList.select(contacts.getFirstId());
-            }
-        })
+		contacts.waitData.then(() => {
+			if (!!id && contacts.exists(id)) {
+				this.contactsList.select(id);
+			}
+			else {
+				this.contactsList.select(contacts.getFirstId());
+			}
+		});
 	}
 }

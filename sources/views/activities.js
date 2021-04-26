@@ -3,7 +3,6 @@ import {JetView} from "webix-jet";
 import activities from "../models/activities";
 import activitiesType from "../models/activities-type";
 import contacts from "../models/contacts";
-import statuses from "../models/statuses";
 import CommonPopup from "./common-popup";
 
 export default class ActivitiesView extends JetView {
@@ -78,7 +77,7 @@ export default class ActivitiesView extends JetView {
 				},
 				"wxi-pencil": (e, id) => {
 					const item = activities.getItem(id);
-                    this.popup.showWindow(id, item);
+					this.popup.showWindow(id, item);
 				}
 			}
 		};
@@ -95,7 +94,7 @@ export default class ActivitiesView extends JetView {
 				right: 10
 			},
 			click: () => {
-                this.popup.showWindow(null);
+				this.popup.showWindow(null);
 			}
 		};
 
@@ -117,8 +116,8 @@ export default class ActivitiesView extends JetView {
 
 	init() {
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
-        this.popup = this.ui(new CommonPopup(this.app, "", activities));
-		this.activitiesDatatatble.sync(activities);   
+		this.popup = this.ui(new CommonPopup(this.app, "", activities));
+		this.activitiesDatatatble.sync(activities);
 	}
 
 	deleteItem(tablelItemId) {

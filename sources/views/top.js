@@ -25,9 +25,9 @@ export default class TopView extends JetView {
 				{value: "Settings", id: "settings", icon: "fa-cogs"}
 			],
 			on: {
-				"onAfterSelect": ()=>{
+				onAfterSelect: () => {
 					const value = this.menu.getSelectedItem().value;
-					this.header.setValues({ page: value }) 
+					this.header.setValues({page: value});
 				}
 			}
 		};
