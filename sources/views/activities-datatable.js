@@ -2,6 +2,7 @@ import {JetView} from "webix-jet";
 
 import activitiesType from "../models/activities-type";
 import CommonPopup from "./common-popup";
+import contacts from "../models/contacts";
 
 export default class ActivitiesView extends JetView {
     constructor(app, name, data, flag) {
@@ -84,8 +85,19 @@ export default class ActivitiesView extends JetView {
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
 		this.popup = this.ui(new CommonPopup(this.app, "", this.data));
         this.activitiesDatatatble.sync(this.data); 
-	}
 
+        this.datatableColumns = this.activitiesDatatatble.config.columns;     
+
+        if(this.isActivityView){
+
+            this.data.filter()
+            this.activitiesDatatatble.sync(this.data);
+
+            //Add ContactID to the datatable in the activities.js
+            this.addContactIdColumn();
+
+        }
+	}
 	deleteItem(tablelItemId) {
 		webix.confirm({
 			title: "Country deleting",
@@ -96,4 +108,20 @@ export default class ActivitiesView extends JetView {
 			}
 		);
 	}
+    addContactIdColumn(){
+        this.datatableColumns.splice(4, 0, 
+            {
+                id: "ContactID",
+                header: [{text: "Contact"}, {content: "selectFilter"}],
+                options: contacts,
+                sort: "text",
+                template(obj) {
+                    const contact = contacts.getItem(obj.ContactID);
+                    return `${(contact && contact.FirstName) || "Name"} ${(contact && contact.LastName) || "Surname"}`;
+                },
+                width: 150
+            }
+        );
+        this.activitiesDatatatble.refreshColumns();
+    }
 }
