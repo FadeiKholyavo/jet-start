@@ -4,6 +4,10 @@ export default new webix.DataCollection({
 	scheme: {
 		$init(obj) {
 			obj.value = `${obj.FirstName} ${obj.LastName}`;
+		},
+		$save(obj){
+			obj.Birthday = obj.Birthday + " 00:00";
+			obj.StartDate = obj.StartDate + " 00:00";
 		}
 	}
 });
