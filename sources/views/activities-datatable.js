@@ -101,6 +101,18 @@ export default class ActivitiesView extends JetView {
             this.deleteColumnsTitles();
         }
 	}
+    urlChange(){
+        const contactId = this.getParam("user", true);
+        if(contactId){
+            this.syncContactActivities(contactId);
+        }
+    }
+    syncContactActivities(contactId){
+
+        this.data.filter(obj => obj.ContactID == contactId);
+        this.activitiesDatatatble.sync(this.data);
+        
+    }
 	deleteItem(tablelItemId) {
 		webix.confirm({
 			title: "Country deleting",
