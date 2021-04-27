@@ -95,7 +95,10 @@ export default class ActivitiesView extends JetView {
 
             //Add ContactID to the datatable in the activities.js
             this.addContactIdColumn();
-
+        }
+        else{
+            //Delete titles of the columns in the contacts-template.js datatable
+            this.deleteColumnsTitles();
         }
 	}
 	deleteItem(tablelItemId) {
@@ -122,6 +125,16 @@ export default class ActivitiesView extends JetView {
                 width: 150
             }
         );
+        this.activitiesDatatatble.refreshColumns();
+    }
+    deleteColumnsTitles(){
+        this.datatableColumns.forEach(obj =>{
+            const header = obj.header;
+            if(header[0].text != ""){
+                header.splice(0,1);
+                header[0].height = 1;
+            } 
+        })
         this.activitiesDatatatble.refreshColumns();
     }
 }
