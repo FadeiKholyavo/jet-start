@@ -16,6 +16,7 @@ export default class ActivitiesView extends JetView {
 			view: "datatable",
 			localId: "activitiesDatatatble",
 			css: "webix_data_border webix_header_border",
+            scroll: "y",
 			select: true,
 			columns: [
 				{
@@ -82,7 +83,7 @@ export default class ActivitiesView extends JetView {
 	}
 
 	init() {
-        
+
         this.on(this.app, "onItemClick", (data)=>{
             this.popup.showWindow(data);
         });
@@ -120,7 +121,7 @@ export default class ActivitiesView extends JetView {
     }
 	deleteItem(tablelItemId) {
 		webix.confirm({
-			title: "Country deleting",
+			title: "Activity deleting",
 			text: "Do you really want to delete this activity"
 		}).then(
 			() => {

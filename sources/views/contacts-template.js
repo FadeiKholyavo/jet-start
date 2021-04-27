@@ -5,6 +5,7 @@ import statuses from "../models/statuses";
 import activities from "../models/activities";
 import ActivitiesDatatable from "./activities-datatable";
 import ActivitiesAddButton from "./activities-add-button";
+import FilesDatatable from "./files-datatable";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
@@ -97,25 +98,25 @@ export default class ContactsTemplateView extends JetView {
 						view: "tabview",
 						cells: [
 							{
-							header: "Activities",
-							body: {
-								rows:[
-									new ActivitiesDatatable(this.app, "", activities, false),
-									{
-										padding: {
-											right: 15
+								header: "Activities",
+								body: {
+									rows:[
+										new ActivitiesDatatable(this.app, "", activities, false),
+										{
+											padding: {
+												right: 15
+											},
+											cols: [
+												ActivitiesAddButton
+											]
 										},
-										cols: [
-											ActivitiesAddButton
-										]
-									},
-									{height:10}
-								]
-							}
+										{height:10}
+									]
+								}
 							},
 							{
 								header: "Files",
-								body: {}
+								body: new FilesDatatable(this.app, "")
 							}
 						]
 					}
