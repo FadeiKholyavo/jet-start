@@ -6,6 +6,7 @@ import activities from "../models/activities";
 import ActivitiesDatatable from "./activities-datatable";
 import ActivitiesAddButton from "./activities-add-button";
 import FilesDatatable from "./files-datatable";
+import files from "../models/files";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
@@ -116,7 +117,7 @@ export default class ContactsTemplateView extends JetView {
 							},
 							{
 								header: "Files",
-								body: new FilesDatatable(this.app, "")
+								body: new FilesDatatable(this.app, "", files)
 							}
 						]
 					}

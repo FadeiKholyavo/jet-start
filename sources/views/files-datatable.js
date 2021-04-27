@@ -5,7 +5,6 @@ export default class FilesDatatableView extends JetView {
 		super(app, name);
 		this.data = data;
 	}
-
 	config() {
 		const filesDatatable = {
 			view: "datatable",
@@ -30,9 +29,10 @@ export default class FilesDatatableView extends JetView {
 				},
 				{
 					id: "Size",
-					header: "Details",
-					sort: "string",
-                    width: 150
+					header: "Size",
+					sort: "int",
+                    width: 150,
+                    template: "#SizeText#"
                 },
 				{
 					id: "Delete",
@@ -50,23 +50,28 @@ export default class FilesDatatableView extends JetView {
 			}
 		};
 
-        const addFileButton = {
-			view: "button",
+        const filesUploader = {
+			view: "uploader",
+            localId: "filesUploader",
 			label: "Upload file",
 			type: "icon",
 			icon: "fas fa-upload",
 			css: "btn",
 			inputWidth: 140,
 			align: "center",
-			click: () => {
-			}
+            autosend: false,
+            on:{
+                "onAfterFileAdd": (obj) =>{
+                    this.saveFile(obj);
+                }
+            }
 		};
 
         const ui = {
             rows:[
                 filesDatatable,
-                addFileButton,
-                {height:10}
+                filesUploader,
+                {height:11}
             ]
         }
 
@@ -75,7 +80,7 @@ export default class FilesDatatableView extends JetView {
 
 	init() {
 		this.filesDatatable = this.$$("filesDatatable");
-
+        this.filesDatatable.sync(this.data);
 	}
     deleteItem(tablelItemId) {
 		webix.confirm({
@@ -87,4 +92,16 @@ export default class FilesDatatableView extends JetView {
 			}
 		);
 	}
+    saveFile(obj){
+        const contactId = this.getParam("user", true);
+
+        const file = {
+            ContactID: contactId,
+            Name: obj.file.name,
+            Size: obj.file.size,
+            SizeText: obj.sizetext,
+            ChangeDate: obj.file.lastModifiedDate
+        }
+        this.data.add(file);
+    }
 }
