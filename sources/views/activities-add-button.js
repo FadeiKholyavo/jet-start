@@ -1,8 +1,5 @@
 import {JetView} from "webix-jet";
 
-import CommonPopup from "./common-popup";
-import activities from "../models/activities";
-
 export default class ActivitiesView extends JetView {
 	config() {
 		const addActivityButton = {
@@ -17,7 +14,7 @@ export default class ActivitiesView extends JetView {
 				right: 10
 			},
 			click: () => {
-				this.getParentView().popup.showWindow(null);
+                this.app.callEvent("onItemclick", null);
 			}
 		};
 		return addActivityButton;
