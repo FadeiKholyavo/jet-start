@@ -3,6 +3,8 @@ import {JetView} from "webix-jet";
 import contacts from "../models/contacts";
 import statuses from "../models/statuses";
 import activities from "../models/activities";
+import ActivitiesDatatable from "./activities-datatable";
+import ActivitiesAddButton from "./activities-add-button";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
@@ -88,7 +90,40 @@ export default class ContactsTemplateView extends JetView {
 					}
 				]
 			};
-			return contactTemplate;
+			const ui = {
+				rows:[
+					contactTemplate,
+					{
+						view: "tabview",
+						cells: [
+							{
+							header: "Activities",
+							body: {
+								rows:[
+									new ActivitiesDatatable(this.app, "", activities, false),
+									{
+										padding: {
+											right: 15
+										},
+										cols: [
+											ActivitiesAddButton
+										]
+									},
+									{height:10}
+								]
+							}
+							},
+							{
+								header: "Files",
+								body: {}
+							}
+						]
+					}
+				]
+			}
+
+			return ui;
+			
 		});
 	}
 
