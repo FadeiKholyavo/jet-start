@@ -31,6 +31,7 @@ export default class CommonPopupView extends JetView {
 				{
 					view: "richselect",
 					name: "ContactID",
+					localId: "ContactID",
 					label: "Contact",
 					invalidMessage: "Contact cannot be empty",
 					options: contacts
@@ -110,7 +111,16 @@ export default class CommonPopupView extends JetView {
 	}
 
 	init() {
+		const contactId = this.getParam("user", true);
 		this.form = this.$$("form");
+		this.contactReachSelect = this.$$("ContactID");
+
+		if(contactId){
+			this.contactReachSelect.define({
+				readonly: true,
+				value: contactId
+			});
+		}
 
 		if (this.item) {
 			this.item.Time = this.item.DueDate;

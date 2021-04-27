@@ -23,7 +23,6 @@ export default class ActivitiesView extends JetView {
 		return ui;
 	}
 	init() {
-		console.log(ActivitiesAddButton)
 		this.popup = this.ui(new CommonPopup(this.app, "", activities));
 	}
 }
