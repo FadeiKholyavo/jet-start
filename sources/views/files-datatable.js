@@ -82,6 +82,12 @@ export default class FilesDatatableView extends JetView {
 		this.filesDatatable = this.$$("filesDatatable");
         this.filesDatatable.sync(this.data);
 	}
+    urlChange(){
+        const contactId = this.getParam("user", true);
+        if(contactId){
+            this.syncContactFiles(contactId);
+        }
+    }
     deleteItem(tablelItemId) {
 		webix.confirm({
 			title: "File deleting",
@@ -104,4 +110,11 @@ export default class FilesDatatableView extends JetView {
         }
         this.data.add(file);
     }
+    syncContactFiles(contactId){
+
+        this.data.filter(obj => obj.ContactID == contactId);
+        this.filesDatatable.sync(this.data);
+        
+    }
+    
 }
