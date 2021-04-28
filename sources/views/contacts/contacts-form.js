@@ -1,7 +1,7 @@
 import {JetView} from "webix-jet";
 
-import statuses from "../models/statuses";
-import contacts from "../models/contacts";
+import statuses from "../../models/statuses";
+import contacts from "../../models/contacts";
 
 export default class ContactsFormView extends JetView {
 	config() {

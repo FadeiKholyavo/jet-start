@@ -1,12 +1,12 @@
 import {JetView} from "webix-jet";
 
-import contacts from "../models/contacts";
-import statuses from "../models/statuses";
-import activities from "../models/activities";
-import ActivitiesDatatable from "./activities-datatable";
-import ActivitiesAddButton from "./activities-add-button";
-import FilesDatatable from "./files-datatable";
-import files from "../models/files";
+import contacts from "../../models/contacts";
+import statuses from "../../models/statuses";
+import activities from "../../models/activities";
+import ActivitiesDatatable from "../activities/activities-datatable";
+import ActivitiesAddButton from "../activities/activities-add-button";
+import FilesDatatable from "../files-datatable";
+import files from "../../models/files";
 
 export default class ContactsTemplateView extends JetView {
 	config() {

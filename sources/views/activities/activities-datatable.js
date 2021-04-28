@@ -1,8 +1,8 @@
 import {JetView} from "webix-jet";
 
-import activitiesType from "../models/activities-type";
-import CommonPopup from "./common-popup";
-import contacts from "../models/contacts";
+import activitiesType from "../../models/activities-type";
+import CommonPopup from "../common-popup";
+import contacts from "../../models/contacts";
 
 export default class ActivitiesView extends JetView {
     constructor(app, name, data, flag) {
@@ -96,7 +96,6 @@ export default class ActivitiesView extends JetView {
         this.datatableColumns = this.activitiesDatatatble.config.columns;     
 
         if(this.isActivityView){
-
             this.data.filter();
 
             //Add ContactID to the datatable in the activities.js
@@ -104,7 +103,6 @@ export default class ActivitiesView extends JetView {
         }
 	}
     urlChange(){
-        
         const contactId = this.getParam("user", true);
         if(contactId){
             this.syncContactActivities(contactId);
