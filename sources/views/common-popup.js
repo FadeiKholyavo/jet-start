@@ -115,7 +115,7 @@ export default class CommonPopupView extends JetView {
 		this.form = this.$$("form");
 		this.contactReachSelect = this.$$("ContactID");
 
-		if(contactId){
+		if (contactId) {
 			this.contactReachSelect.define({
 				readonly: true,
 				value: contactId

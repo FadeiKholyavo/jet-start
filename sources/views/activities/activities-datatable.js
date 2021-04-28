@@ -1,14 +1,14 @@
 import {JetView} from "webix-jet";
 
 import activitiesType from "../../models/activities-type";
-import CommonPopup from "../common-popup";
 import contacts from "../../models/contacts";
+import CommonPopup from "../common-popup";
 
 export default class ActivitiesView extends JetView {
-    constructor(app, name, data, flag) {
+	constructor(app, name, data, flag) {
 		super(app, name);
 		this.data = data;
-        this.isActivityView = flag;
+		this.isActivityView = flag;
 	}
 
 	config() {
@@ -16,7 +16,7 @@ export default class ActivitiesView extends JetView {
 			view: "datatable",
 			localId: "activitiesDatatatble",
 			css: "webix_data_border webix_header_border",
-            scroll: "y",
+			scroll: "y",
 			select: true,
 			columns: [
 				{
@@ -51,14 +51,14 @@ export default class ActivitiesView extends JetView {
 					header: [{text: "Details"}, {content: "textFilter"}],
 					sort: "string",
 					fillspace: true
-                },
+				},
 				{
 					id: "Edit",
 					header: "",
 					css: "activities_columns-center",
 					template: "{common.editIcon()}",
 					width: 40
-                },
+				},
 				{
 					id: "Delete",
 					header: "",
@@ -83,41 +83,38 @@ export default class ActivitiesView extends JetView {
 	}
 
 	init() {
-       
-        this.on(this.app, "onItemClick", (data)=>{
-            this.popup.showWindow(data);
-        });
-        
+		this.on(this.app, "onItemClick", (data) => {
+			this.popup.showWindow(data);
+		});
+
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
 		this.popup = this.ui(new CommonPopup(this.app, "", this.data));
 
-        this.activitiesDatatatble.sync(this.data);
+		this.activitiesDatatatble.sync(this.data);
 
-        this.datatableColumns = this.activitiesDatatatble.config.columns;     
+		this.datatableColumns = this.activitiesDatatatble.config.columns;
 
-        if(this.isActivityView){
-            this.data.filter();
+		if (this.isActivityView) {
+			this.data.filter();
 
-            //Add ContactID to the datatable in the activities.js
-            this.addContactIdColumn();
-        }
+			// Add ContactID to the datatable in the activities.js
+			this.addContactIdColumn();
+		}
 	}
-    urlChange(){
-        const contactId = this.getParam("user", true);
-        if(contactId){
-            this.syncContactActivities(contactId);
-        }
-    }
-    syncContactActivities(contactId){
 
-        this.data.waitData.then(()=>{
-            
-            this.data.filter(obj => obj.ContactID == contactId);
+	urlChange() {
+		const contactId = this.getParam("user", true);
+		if (contactId) {
+			this.syncContactActivities(contactId);
+		}
+	}
 
-        })
-        
+	syncContactActivities(contactId) {
+		this.data.waitData.then(() => {
+			this.data.filter(obj => String(obj.ContactID) === contactId);
+		});
+	}
 
-    }
 	deleteItem(tablelItemId) {
 		webix.confirm({
 			title: "Activity deleting",
@@ -128,20 +125,20 @@ export default class ActivitiesView extends JetView {
 			}
 		);
 	}
-    addContactIdColumn(){
-        this.datatableColumns.splice(4, 0, 
-            {
-                id: "ContactID",
-                header: [{text: "Contact"}, {content: "selectFilter"}],
-                options: contacts,
-                sort: "text",
-                template(obj) {
-                    const contact = contacts.getItem(obj.ContactID);
-                    return `${(contact && contact.FirstName) || "Name"} ${(contact && contact.LastName) || "Surname"}`;
-                },
-                width: 150
-            }
-        );
-        this.activitiesDatatatble.refreshColumns();
-    }
+
+	addContactIdColumn() {
+		this.datatableColumns.splice(4, 0,
+			{
+				id: "ContactID",
+				header: [{text: "Contact"}, {content: "selectFilter"}],
+				options: contacts,
+				sort: "text",
+				template(obj) {
+					const contact = contacts.getItem(obj.ContactID);
+					return `${(contact && contact.FirstName) || "Name"} ${(contact && contact.LastName) || "Surname"}`;
+				},
+				width: 150
+			});
+		this.activitiesDatatatble.refreshColumns();
+	}
 }

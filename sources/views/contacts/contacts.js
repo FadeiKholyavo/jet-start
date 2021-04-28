@@ -34,25 +34,25 @@ export default class ContactsView extends JetView {
 			}
 		};
 		const addButton = {
-            view: "button", 
+			view: "button",
 			localId: "addButton",
 			label: "Add contact",
 			type: "icon",
 			icon: "fas fa-plus-square",
-            css: "btn",
-            click: ()=>{
-                this.show("contacts-form?action=Add new");
-            }
-        }
+			css: "btn",
+			click: () => {
+				this.show("contacts-form?action=Add new");
+			}
+		};
 
 		const ui = {
 			cols: [
 				{
-					rows:[
-                        contactsList,
-                        addButton,
-                        {height:10}
-                    ]
+					rows: [
+						contactsList,
+						addButton,
+						{height: 10}
+					]
 				},
 				{$subview: true}
 			]
@@ -65,19 +65,22 @@ export default class ContactsView extends JetView {
 		this.contactsList.sync(contacts);
 		this.addButton = this.$$("addButton");
 	}
-	ready(){
-		contacts.waitData.then(()=>{
-			if(contacts.getFirstId()){
+
+	ready() {
+		contacts.waitData.then(() => {
+			if (contacts.getFirstId()) {
 				this.show("contacts-template");
-				if(!this.addButton.isEnabled()){
+				if (!this.addButton.isEnabled()) {
 					this.addButton.enable();
-				}	
-			}else{
+				}
+			}
+			else {
 				this.show("contacts-form?action=Add new");
 				this.addButton.disable();
 			}
-		})
-    }
+		});
+	}
+
 	urlChange() {
 		const id = this.getParam("user");
 		contacts.waitData.then(() => {
@@ -90,4 +93,4 @@ export default class ContactsView extends JetView {
 		});
 	}
 }
-	
+

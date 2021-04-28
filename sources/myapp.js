@@ -11,11 +11,11 @@ export default class MyApp extends JetApp {
 			debug: true,
 			start: "/top/contacts",
 			views: {
-                "contacts" : "contacts.contacts",
+				contacts: "contacts.contacts",
 				"contacts-template": "contacts.contacts-template",
 				"contacts-form": "contacts.contacts-form",
-				"activities": "activities.activities"
-            }
+				activities: "activities.activities"
+			}
 		};
 
 		super({...defaults, ...config});

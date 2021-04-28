@@ -1,12 +1,12 @@
 import {JetView} from "webix-jet";
 
-import contacts from "../../models/contacts";
-import statuses from "../../models/statuses";
 import activities from "../../models/activities";
-import ActivitiesDatatable from "../activities/activities-datatable";
-import ActivitiesAddButton from "../activities/activities-add-button";
-import FilesDatatable from "../files-datatable";
+import contacts from "../../models/contacts";
 import files from "../../models/files";
+import statuses from "../../models/statuses";
+import ActivitiesAddButton from "../activities/activities-add-button";
+import ActivitiesDatatable from "../activities/activities-datatable";
+import FilesDatatable from "../files-datatable";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
@@ -32,7 +32,7 @@ export default class ContactsTemplateView extends JetView {
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
                                                 </ul>`;
 							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}`;
-							const userStatus = `<span class="contacts-template_status">${(obj && obj.StatusID && statuses.getItem(obj.StatusID)  && statuses.getItem(obj.StatusID).Value) || "-"}</span>`;
+							const userStatus = `<span class="contacts-template_status">${(obj && obj.StatusID && statuses.getItem(obj.StatusID) && statuses.getItem(obj.StatusID).Value) || "-"}</span>`;
 
 							return `<div class="contacts-template">
                                         <div class="contacts-template_first-row">
@@ -56,7 +56,7 @@ export default class ContactsTemplateView extends JetView {
 					{
 						css: {
 							"border-left": "1px solid transparent",
-							"padding": "30px 0 0 0"
+							padding: "30px 0 0 0"
 						},
 						rows: [
 							{
@@ -70,7 +70,7 @@ export default class ContactsTemplateView extends JetView {
 										type: "icon",
 										icon: "fas fa-trash-alt",
 										autowidth: true,
-										click: ()=>{
+										click: () => {
 											this.deleteContact();
 										}
 									},
@@ -81,9 +81,9 @@ export default class ContactsTemplateView extends JetView {
 										type: "icon",
 										icon: "fas fa-edit",
 										autowidth: true,
-										click:()=>{
-                                            this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`);
-                                        }
+										click: () => {
+											this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`);
+										}
 									}
 								]
 							},
@@ -93,7 +93,7 @@ export default class ContactsTemplateView extends JetView {
 				]
 			};
 			const ui = {
-				rows:[
+				rows: [
 					contactTemplate,
 					{
 						view: "tabview",
@@ -101,7 +101,7 @@ export default class ContactsTemplateView extends JetView {
 							{
 								header: "Activities",
 								body: {
-									rows:[
+									rows: [
 										new ActivitiesDatatable(this.app, "", activities, false),
 										{
 											padding: {
@@ -111,7 +111,7 @@ export default class ContactsTemplateView extends JetView {
 												ActivitiesAddButton
 											]
 										},
-										{height:10}
+										{height: 10}
 									]
 								}
 							},
@@ -122,10 +122,9 @@ export default class ContactsTemplateView extends JetView {
 						]
 					}
 				]
-			}
+			};
 
 			return ui;
-
 		});
 	}
 
@@ -141,23 +140,23 @@ export default class ContactsTemplateView extends JetView {
 			}
 		});
 	}
-	deleteContact(){
+
+	deleteContact() {
 		webix.confirm({
 			title: "User deleting",
 			text: "Do you really want to delete this contact"
-		}).then(()=>{
-					const contactId = contacts.getItem(this.getParam("user", true)).id;
-					contacts.remove(contactId);
-					activities.find((obj)=>{
-						return obj.ContactID == contactId;
-					}).forEach((obj)=>{
-						activities.remove(obj.id);
-					})
-					if(contacts.getFirstId()){
-						this.getParentView().contactsList.select(contacts.getFirstId());
-					}else{
-						this.show("contacts-form?action=Add new");
-					}
-			})
+		}).then(() => {
+			const contactId = contacts.getItem(this.getParam("user", true)).id;
+			contacts.remove(contactId);
+			activities.find(obj => obj.ContactID === contactId).forEach((obj) => {
+				activities.remove(obj.id);
+			});
+			if (contacts.getFirstId()) {
+				this.getParentView().contactsList.select(contacts.getFirstId());
+			}
+			else {
+				this.show("contacts-form?action=Add new");
+			}
+		});
 	}
 }
