@@ -92,8 +92,6 @@ export default class ActivitiesView extends JetView {
 
 		this.activitiesDatatatble.sync(this.data);
 
-		this.datatableColumns = this.activitiesDatatatble.config.columns;
-
 		if (this.isActivityView) {
 			this.data.filter();
 
@@ -127,7 +125,7 @@ export default class ActivitiesView extends JetView {
 	}
 
 	addContactIdColumn() {
-		this.datatableColumns.splice(4, 0,
+		this.activitiesDatatatble.config.columns.splice(4, 0,
 			{
 				id: "ContactID",
 				header: [{text: "Contact"}, {content: "selectFilter"}],
