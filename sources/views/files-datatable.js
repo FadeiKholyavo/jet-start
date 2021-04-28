@@ -87,7 +87,7 @@ export default class FilesDatatableView extends JetView {
 	urlChange() {
 		const contactId = this.getParam("user", true);
 		if (contactId) {
-			this.syncContactFiles(contactId);
+			this.filterContactFiles(contactId);
 		}
 	}
 
@@ -115,7 +115,7 @@ export default class FilesDatatableView extends JetView {
 		this.data.add(file);
 	}
 
-	syncContactFiles(contactId) {
+	filterContactFiles(contactId) {
 		this.data.filter(obj => String(obj.ContactID) === contactId);
 	}
 }

@@ -105,11 +105,11 @@ export default class ActivitiesView extends JetView {
 	urlChange() {
 		const contactId = this.getParam("user", true);
 		if (contactId) {
-			this.syncContactActivities(contactId);
+			this.filterContactActivities(contactId);
 		}
 	}
 
-	syncContactActivities(contactId) {
+	filterContactActivities(contactId) {
 		this.data.waitData.then(() => {
 			this.data.filter(obj => String(obj.ContactID) === contactId);
 		});
