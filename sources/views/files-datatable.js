@@ -117,6 +117,5 @@ export default class FilesDatatableView extends JetView {
 
 	syncContactFiles(contactId) {
 		this.data.filter(obj => String(obj.ContactID) === contactId);
-		this.filesDatatable.sync(this.data);
 	}
 }
