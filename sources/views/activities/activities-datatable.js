@@ -118,7 +118,7 @@ export default class ActivitiesView extends JetView {
 	deleteItem(tablelItemId) {
 		webix.confirm({
 			title: "Activity deleting",
-			text: "Do you really want to delete this activity"
+			text: "Do you really want to delete this activity?"
 		}).then(
 			() => {
 				this.data.remove(tablelItemId);

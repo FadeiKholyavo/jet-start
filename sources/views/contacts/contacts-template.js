@@ -143,8 +143,8 @@ export default class ContactsTemplateView extends JetView {
 
 	deleteContact() {
 		webix.confirm({
-			title: "User deleting",
-			text: "Do you really want to delete this contact"
+			title: "Contact deleting",
+			text: "Do you really want to delete this contact?"
 		}).then(() => {
 			const contactId = contacts.getItem(this.getParam("user", true)).id;
 			contacts.remove(contactId);
