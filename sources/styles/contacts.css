@@ -12,6 +12,10 @@
     line-height: 45px;
     overflow: hidden;
 }
+.contacts-list_photo img{
+    height: 45px;
+    width: 45px;
+}
 .contacts-list_info{
     padding-left: 20px;
     display: flex;
@@ -36,7 +40,6 @@
 .contacts-template{
     display: flex;
     flex-direction: column;
-
 }
 .contacts-template_first-row{
     padding-top: 30px;
@@ -54,6 +57,10 @@
     text-align: center;
     line-height: 45px;
     overflow: hidden;
+}
+.contacts-template_photo img{
+    width: 150px;
+    height: 150px;
 }
 .contacts-template_photo-big img{
     width: 250px;

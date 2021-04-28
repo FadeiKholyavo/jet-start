@@ -15,7 +15,7 @@ export default class ContactsView extends JetView {
 			template(obj) {
 				return `<div class="contacts-list">
                             <span class="contacts-list_photo">
-                                ${(obj && obj.Photo && `<img src="${obj.Photo}" width="50">`) || "<span class=\"far fa-user\"></span>"}
+                                ${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}
                             </span>
                             <div class="contacts-list_info">
                                 <span class="contacts-list_name">
