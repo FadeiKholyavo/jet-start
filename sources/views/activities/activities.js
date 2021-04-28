@@ -22,8 +22,4 @@ export default class ActivitiesView extends JetView {
 		};
 		return ui;
 	}
-
-	init() {
-		this.popup = this.ui(new CommonPopup(this.app, "", activities));
-	}
 }
