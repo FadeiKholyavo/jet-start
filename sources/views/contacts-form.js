@@ -79,10 +79,14 @@ export default class ContactsFormView extends JetView {
             cols:[
                 {
                     view: "template",
+                    localId: "contactPhoto",
+                    name: "Photo",
                     borderless: true,
                     height: 260,
                     template: () =>{
-                        const userPhoto = `${(contacts && contacts.Photo && `<img src="${contacts.Photo}" width="150">`) || `<span class="far fa-user"></span>`}`;
+                        const contactId = this.getParam("user");
+                        const contact = contacts.getItem(contactId);
+                        const userPhoto = `${(contact && contact.Photo && `<img src="${contact.Photo}">`) || `<span class="far fa-user"></span>`}`;
                         return `<div class="contacts-template_photo contacts-template_photo-big">
                                     ${userPhoto}
                                 </div>`
@@ -93,16 +97,26 @@ export default class ContactsFormView extends JetView {
                     rows:[
                         {},
                         {
-                            view: "button",
+                            view: "uploader",
                             label: "Change photo",
                             css: "btn",
-                            width: 140
+                            accept: "imgae/jpeg, imgae/png, imgae/jpg, imgae/JPG",
+                            width: 140,
+                            autosend: false,
+                            on:{
+                                "onBeforeFileAdd": (upload)=>{
+                                    this.changePhoto(upload);
+                                }
+                            }
                         },
                         {
                             view: "button",
                             label: "Delete photo",
                             css: "btn",
-                            width: 140
+                            width: 140,
+                            click:()=>{
+                                this.deletePhoto();
+                            }
                         }
                     ]
                 }
@@ -215,6 +229,7 @@ export default class ContactsFormView extends JetView {
         this.header = this.$$("header");
         this.actionButton = this.$$("actButton");
         this.cancelButton = this.$$("cancelButton");
+        this.contactPhoto = this.$$("contactPhoto");
         this.action = this.getParam("action") || "Set";
         this.header.setValues({action: this.action});
         this.actionButton.setValue((this.action == "Edit" && "Save") || "Add");
@@ -243,6 +258,7 @@ export default class ContactsFormView extends JetView {
 		if (form.validate()) {
 			const formItem = form.getValues();
 			const formItemId = formItem.id;
+            
 			if (form.isDirty()) {
 				//Protection against XSS
                 const unKeys = ["Birthday", "StartDate", "StatusID", "id", "value", "Photo"];
@@ -289,4 +305,28 @@ export default class ContactsFormView extends JetView {
 
         this.show("contacts-template");
 	}
+    changePhoto(upload){
+        const reader = new FileReader();
+        reader.readAsDataURL(upload.file); 
+        reader.onload = () => {
+            const photo = reader.result;
+            this.form.setValues({Photo: photo}, true);
+            this.contactPhoto.define({
+                template: `<div class="contacts-template_photo contacts-template_photo-big">
+                                    <img src="${photo}">
+                                </div>`
+                            });
+            this.contactPhoto.refresh();
+        };       
+        return false;
+    }
+    deletePhoto(){
+        this.form.setValues({Photo: ""}, true);
+        this.contactPhoto.define({
+            template: `<div class="contacts-template_photo contacts-template_photo-big">
+                            <span class="far fa-user"></span>
+                        </div>`
+                        });
+        this.contactPhoto.refresh();
+    }
 }
