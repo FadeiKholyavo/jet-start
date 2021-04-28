@@ -34,7 +34,7 @@ export default class ActivitiesView extends JetView {
 					options: activitiesType,
 					sort: "string",
 					template(obj) {
-						return (obj && obj.TypeID && activitiesType.getItem(obj.TypeID).Value) || "Status";
+						return (obj && obj.TypeID && activitiesType.getItem(obj.TypeID) && activitiesType.getItem(obj.TypeID).Value) || "Status";
 					},
 					width: 150
 				},
@@ -113,7 +113,7 @@ export default class ActivitiesView extends JetView {
 
         this.data.filter(obj => obj.ContactID == contactId);
         this.activitiesDatatatble.sync(this.data);
-        
+           
     }
 	deleteItem(tablelItemId) {
 		webix.confirm({
