@@ -149,9 +149,10 @@ export default class ContactsTemplateView extends JetView {
 			const contactId = contacts.getItem(this.getParam("user", true)).id;
 			const contactsFirstId = contacts.getFirstId();
 			contacts.remove(contactId);
-			activities.find(obj => obj.ContactID === contactId).forEach((obj) => {
-				activities.remove(obj.id);
-			});
+			activities.find(obj => obj.ContactID === contactId)
+						.forEach((obj) => {
+							activities.remove(obj.id);
+						});
 			if (contactsFirstId) {
 				this.getParentView().contactsList.select(contactsFirstId);
 			}
