@@ -265,7 +265,10 @@ export default class ContactsFormView extends JetView {
 			if (form.isDirty()) {
 				// Protection against XSS
 				const unKeys = ["Birthday", "StartDate", "StatusID", "id", "value", "Photo"];
-				Object.keys(formItem).filter(key => unKeys.indexOf(key) === -1);
+				Object.keys(formItem).filter(key => unKeys.indexOf(key) === -1)
+									.forEach(key => {
+										formItem[key] = webix.template.escape(formItem[key]);
+									});
 
 				formItem.Birthday = this.parser(formItem.Birthday || new Date());
 				formItem.StartDate = this.parser(formItem.StartDate || new Date());
