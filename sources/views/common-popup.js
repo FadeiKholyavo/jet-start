@@ -158,18 +158,13 @@ export default class CommonPopupView extends JetView {
 				// Protection against XSS
 				formItem.Details = webix.template.escape(formItem.Details);
 
-				const time = webix.i18n.dateFormatDate(formItem.Time);
-				const date = webix.i18n.dateFormatDate(formItem.Date);
-				if (!!time && !!date) {
-					formItem.DueDate = new Date(
-						date.getFullYear(),
-						date.getMonth(), date.getDate(),
-						time.getHours(), time.getMinutes()
-					);
-				}
-				else {
-					formItem.DueDate = new Date();
-				}
+				const time = webix.i18n.dateFormatDate(formItem.Time) || new Date();
+				const date = webix.i18n.dateFormatDate(formItem.Date) || new Date();
+				formItem.DueDate = new Date(
+					date.getFullYear(),
+					date.getMonth(), date.getDate(),
+					time.getHours(), time.getMinutes()
+				);
 
 				if (data.exists(formItemId)) {
 					form.setDirty(false);
