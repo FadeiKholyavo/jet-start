@@ -146,18 +146,30 @@ export default class ContactsTemplateView extends JetView {
 			title: "Contact deleting",
 			text: "Do you really want to delete this contact?"
 		}).then(() => {
-			const contactId = contacts.getItem(this.getParam("user", true)).id;
-			const contactsFirstId = contacts.getFirstId();
-			contacts.remove(contactId);
-			activities.find(obj => obj.ContactID === contactId)
-						.forEach((obj) => {
-							activities.remove(obj.id);
-						});
-			if (contactsFirstId) {
-				this.getParentView().contactsList.select(contactsFirstId);
-			}
-			else {
-				this.show("contacts-form?action=Add new");
+			const idParam = this.getParam("user", true);
+			const contact = contacts.getItem(idParam);
+			if(contact){
+				const contactId = contact.id;
+				const contactsFirstId = contacts.getFirstId();
+				contacts.remove(contactId);
+				activities.find(obj => obj.ContactID === contactId)
+							.forEach((obj) => {
+								activities.remove(obj.id);
+							});
+
+				if (contactsFirstId) {
+					this.getParentView().contactsList.select(contactsFirstId);
+				}
+				else {
+					this.show("contacts-form?action=Add new");
+				}
+
+			}else{
+				webix.message({
+					text: "There is no such contact",
+					type: "error",
+					expire: 1000
+				});
 			}
 		});
 	}
