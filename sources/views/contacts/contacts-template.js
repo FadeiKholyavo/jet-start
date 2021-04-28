@@ -20,7 +20,10 @@ export default class ContactsTemplateView extends JetView {
 							"border-right": "1px solid transparent"
 						},
 						template(obj) {
-							const userName = `<span class="contacts-template_name">${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}</span>`;
+							const status = obj && obj.StatusID && statuses.getItem(obj.StatusID).Value;
+							const userName = `<span class="contacts-template_name">
+												${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}
+											</span>`;
 							const userInfo = `  <ul>
                                                     <li><span class="fas fa-at"></span>${(obj && obj.Email) || "-"}</li>
                                                     <li><span class="fab fa-skype"></span>${(obj && obj.Skype) || "-"}</li>
@@ -31,8 +34,8 @@ export default class ContactsTemplateView extends JetView {
                                                     <li><span class="far fa-calendar-alt"></span>${(obj && obj.Birthday) || "-"}</li>
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
                                                 </ul>`;
-							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}`;
-							const userStatus = `<span class="contacts-template_status">${(obj && obj.StatusID && statuses.getItem(obj.StatusID) && statuses.getItem(obj.StatusID).Value) || "-"}</span>`;
+							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || `<span class="far fa-user"></span>`}`;
+							const userStatus = `<span class="contacts-template_status">${ status || "-"}</span>`;
 
 							return `<div class="contacts-template">
                                         <div class="contacts-template_first-row">
