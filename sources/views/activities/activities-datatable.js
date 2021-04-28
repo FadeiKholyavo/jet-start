@@ -83,7 +83,7 @@ export default class ActivitiesView extends JetView {
 	}
 
 	init() {
-		this.on(this.app, "onItemClick", (data) => {
+		this.on(this.app, "activitiesDatatable:showPopup", (data) => {
 			this.popup.showWindow(data);
 		});
 

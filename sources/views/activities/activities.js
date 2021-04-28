@@ -1,7 +1,6 @@
 import {JetView} from "webix-jet";
 
 import activities from "../../models/activities";
-import CommonPopup from "../common-popup";
 import ActivitiesAddButton from "./activities-add-button";
 import ActivitiesDatatable from "./activities-datatable";
 

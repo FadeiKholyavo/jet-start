@@ -14,7 +14,7 @@ export default class ActivitiesView extends JetView {
 				right: 10
 			},
 			click: () => {
-				this.app.callEvent("onItemclick", null);
+				this.app.callEvent("activitiesDatatable:showPopup", null);
 			}
 		};
 		return addActivityButton;
