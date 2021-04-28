@@ -114,3 +114,7 @@ button .webix_icon_btn{
     font-size: 16px;
     color: #475466 !important;
 }
+
+input, select, textarea, .webix_inp_static{
+    border-radius: 5px !important;
+}
