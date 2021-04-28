@@ -83,27 +83,28 @@ export default class ActivitiesView extends JetView {
 	}
 
 	init() {
-
+       
         this.on(this.app, "onItemClick", (data)=>{
             this.popup.showWindow(data);
         });
         
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
 		this.popup = this.ui(new CommonPopup(this.app, "", this.data));
-        this.activitiesDatatatble.sync(this.data); 
+
+        this.activitiesDatatatble.sync(this.data);
 
         this.datatableColumns = this.activitiesDatatatble.config.columns;     
 
         if(this.isActivityView){
 
-            this.data.filter()
-            this.activitiesDatatatble.sync(this.data);
+            this.data.filter();
 
             //Add ContactID to the datatable in the activities.js
             this.addContactIdColumn();
         }
 	}
     urlChange(){
+        
         const contactId = this.getParam("user", true);
         if(contactId){
             this.syncContactActivities(contactId);
@@ -111,9 +112,13 @@ export default class ActivitiesView extends JetView {
     }
     syncContactActivities(contactId){
 
-        this.data.filter(obj => obj.ContactID == contactId);
-        this.activitiesDatatatble.sync(this.data);
-           
+        this.data.waitData.then(()=>{
+            
+            this.data.filter(obj => obj.ContactID == contactId);
+
+        })
+        
+
     }
 	deleteItem(tablelItemId) {
 		webix.confirm({
