@@ -20,7 +20,7 @@ export default class ContactsTemplateView extends JetView {
 							"border-right": "1px solid transparent"
 						},
 						template(obj) {
-							const statusItem = statuses.getItem(obj.StatusID)
+							const statusItem = statuses.getItem(obj.StatusID);
 							const statusValue = obj && obj.StatusID && statusItem && statusItem.Value;
 							const userName = `<span class="contacts-template_name">
 												${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}
@@ -35,8 +35,8 @@ export default class ContactsTemplateView extends JetView {
                                                     <li><span class="far fa-calendar-alt"></span>${(obj && obj.Birthday) || "-"}</li>
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
                                                 </ul>`;
-							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || `<span class="far fa-user"></span>`}`;
-							const userStatus = `<span class="contacts-template_status">${ statusValue || "-"}</span>`;
+							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}`;
+							const userStatus = `<span class="contacts-template_status">${statusValue || "-"}</span>`;
 
 							return `<div class="contacts-template">
                                         <div class="contacts-template_first-row">
@@ -86,7 +86,7 @@ export default class ContactsTemplateView extends JetView {
 										icon: "fas fa-edit",
 										autowidth: true,
 										click: () => {
-											this.contactList.define({select:false});
+											this.contactList.define({select: false});
 											this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`);
 										}
 									}
@@ -154,13 +154,13 @@ export default class ContactsTemplateView extends JetView {
 		}).then(() => {
 			const idParam = this.getParam("user", true);
 			const contact = contacts.getItem(idParam);
-			if(contact){
+			if (contact) {
 				const contactId = contact.id;
 				contacts.remove(contactId);
 				activities.find(obj => String(obj.ContactID) === String(contactId))
-							.forEach((obj) => {
-								activities.remove(obj.id);
-							});
+					.forEach((obj) => {
+						activities.remove(obj.id);
+					});
 
 				const contactsFirstId = contacts.getFirstId();
 				if (contactsFirstId) {
@@ -169,8 +169,8 @@ export default class ContactsTemplateView extends JetView {
 				else {
 					this.show("contacts-form?action=Add new");
 				}
-
-			}else{
+			}
+			else {
 				webix.message({
 					text: "There is no such contact",
 					type: "error",

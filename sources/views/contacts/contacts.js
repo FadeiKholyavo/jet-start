@@ -41,7 +41,7 @@ export default class ContactsView extends JetView {
 			icon: "fas fa-plus-square",
 			css: "custom-button",
 			click: () => {
-				this.contactsList.define({select:false});
+				this.contactsList.define({select: false});
 				this.show("contacts-form?action=Add new");
 			}
 		};

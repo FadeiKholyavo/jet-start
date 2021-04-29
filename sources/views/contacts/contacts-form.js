@@ -238,11 +238,11 @@ export default class ContactsFormView extends JetView {
 		this.contactsList = this.getParentView().contactsList;
 		this.addButton = this.getParentView().addButton;
 		this.addButton.disable();
-
 	}
+
 	urlChange() {
 		const id = this.getParam("user");
-		const action = this.getParam("action")
+		const action = this.getParam("action");
 		webix.promise.all([
 			contacts.waitData,
 			statuses.waitData
@@ -253,7 +253,7 @@ export default class ContactsFormView extends JetView {
 			if (!contacts.getFirstId()) {
 				this.cancelButton.hide();
 			}
-			if (action === "Add new"){
+			if (action === "Add new") {
 				this.contactsList.unselectAll();
 			}
 		});
@@ -271,9 +271,9 @@ export default class ContactsFormView extends JetView {
 				// Protection against XSS
 				const unKeys = ["Birthday", "StartDate", "StatusID", "id", "value", "Photo"];
 				Object.keys(formItem).filter(key => unKeys.indexOf(key) === -1)
-									.forEach(key => {
-										formItem[key] = webix.template.escape(formItem[key]);
-									});
+					.forEach((key) => {
+						formItem[key] = webix.template.escape(formItem[key]);
+					});
 
 				formItem.Birthday = this.parser(formItem.Birthday || new Date());
 				formItem.StartDate = this.parser(formItem.StartDate || new Date());
@@ -311,9 +311,9 @@ export default class ContactsFormView extends JetView {
 		form.clear();
 		form.clearValidation();
 		this.addButton.enable();
-		this.contactsList.define({select:true});
-		
-		if(obj){
+		this.contactsList.define({select: true});
+
+		if (obj) {
 			this.contactsList.select(obj.id);
 		}
 
