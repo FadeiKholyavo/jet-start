@@ -116,6 +116,6 @@ export default class FilesDatatableView extends JetView {
 	}
 
 	filterContactFiles(contactId) {
-		this.data.filter(obj => String(obj.ContactID) === contactId);
+		this.data.filter(obj => String(obj.ContactID) === String(contactId));
 	}
 }
