@@ -272,9 +272,8 @@ export default class ContactsFormView extends JetView {
 				const unKeys = ["Birthday", "StartDate", "StatusID", "id", "value", "Photo"];
 				formItem = Object.entries(formItem).reduce((acc, [key, value]) => {
 					acc[key] = unKeys.includes(key) ? value : webix.template.escape(value);
-						return acc;
-					}, {});
-				console.log(formItem)
+					return acc;
+				}, {});
 
 				formItem.Birthday = this.parser(formItem.Birthday || new Date());
 				formItem.StartDate = this.parser(formItem.StartDate || new Date());
