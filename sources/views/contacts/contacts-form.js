@@ -291,8 +291,8 @@ export default class ContactsFormView extends JetView {
 						type: "success",
 						expire: 1000
 					});
-				}).then(() => {
-					this.closeForm();
+				}).then((obj) => {
+					this.closeForm(obj);
 				});
 			}
 			else {
@@ -305,13 +305,14 @@ export default class ContactsFormView extends JetView {
 		}
 	}
 
-	closeForm() {
+	closeForm(obj) {
 		const form = this.form;
 
 		form.clear();
 		form.clearValidation();
 		this.addButton.enable();
 		this.contactsList.define({select:true});
+		this.contactsList.select(obj.id);
 
 		this.show("contacts-template");
 	}

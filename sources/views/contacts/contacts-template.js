@@ -20,7 +20,8 @@ export default class ContactsTemplateView extends JetView {
 							"border-right": "1px solid transparent"
 						},
 						template(obj) {
-							const status = obj && obj.StatusID && statuses.getItem(obj.StatusID).Value;
+							const statusItem = statuses.getItem(obj.StatusID)
+							const statusValue = obj && obj.StatusID && statusItem &&statusItem.Value;
 							const userName = `<span class="contacts-template_name">
 												${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}
 											</span>`;
