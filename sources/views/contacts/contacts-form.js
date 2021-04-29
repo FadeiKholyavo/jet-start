@@ -312,7 +312,10 @@ export default class ContactsFormView extends JetView {
 		form.clearValidation();
 		this.addButton.enable();
 		this.contactsList.define({select:true});
-		this.contactsList.select(obj.id);
+		
+		if(obj){
+			this.contactsList.select(obj.id);
+		}
 
 		this.show("contacts-template");
 	}
