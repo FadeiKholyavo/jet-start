@@ -34,7 +34,9 @@ export default class ActivitiesView extends JetView {
 					options: activitiesType,
 					sort: "string",
 					template(obj) {
-						return (obj && obj.TypeID && activitiesType.getItem(obj.TypeID) && activitiesType.getItem(obj.TypeID).Value) || "Status";
+						const activityTypeItem = activitiesType.getItem(obj.TypeID);
+						const activityTypeValue =  activityTypeItem && activityTypeItem.Value;
+						return  activityTypeValue || "Status";
 					},
 					width: 150
 				},
