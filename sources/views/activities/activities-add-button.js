@@ -7,7 +7,7 @@ export default class ActivitiesView extends JetView {
 			label: "Add activity",
 			type: "icon",
 			icon: "fas fa-plus-square",
-			css: "btn",
+			css: "custom-button",
 			inputWidth: 130,
 			align: "right",
 			padding: {

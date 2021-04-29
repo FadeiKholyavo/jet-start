@@ -57,7 +57,7 @@ export default class FilesDatatableView extends JetView {
 			label: "Upload file",
 			type: "icon",
 			icon: "fas fa-upload",
-			css: "btn",
+			css: "custom-button",
 			inputWidth: 140,
 			align: "center",
 			autosend: false,

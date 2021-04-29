@@ -71,7 +71,7 @@ export default class CommonPopupView extends JetView {
 								{
 									view: "button",
 									label: this.buttonName,
-									css: "btn",
+									css: "custom-button",
 									align: "right",
 									width: 100,
 									click: () => {
@@ -81,7 +81,7 @@ export default class CommonPopupView extends JetView {
 								{
 									view: "button",
 									label: "Cancel",
-									css: "btn",
+									css: "custom-button",
 									align: "right",
 									width: 100,
 									click: () => {

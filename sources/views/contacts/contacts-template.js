@@ -69,7 +69,7 @@ export default class ContactsTemplateView extends JetView {
 									{
 										view: "button",
 										label: "Delete",
-										css: "btn",
+										css: "custom-button",
 										type: "icon",
 										icon: "fas fa-trash-alt",
 										autowidth: true,
@@ -80,7 +80,7 @@ export default class ContactsTemplateView extends JetView {
 									{
 										view: "button",
 										label: "Edit",
-										css: "btn",
+										css: "custom-button",
 										type: "icon",
 										icon: "fas fa-edit",
 										autowidth: true,

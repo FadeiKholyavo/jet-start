@@ -1,5 +1,6 @@
 @import url("./contacts.css");
 @import url("./activties.css");
+@import url("./common.css");
 
 .app_header.webix_header{
     padding-top: 5px;

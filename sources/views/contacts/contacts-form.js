@@ -99,7 +99,7 @@ export default class ContactsFormView extends JetView {
 						{
 							view: "uploader",
 							label: "Change photo",
-							css: "btn",
+							css: "custom-button",
 							accept: "imgae/jpeg, imgae/png, imgae/jpg, imgae/JPG",
 							width: 140,
 							autosend: false,
@@ -112,7 +112,7 @@ export default class ContactsFormView extends JetView {
 						{
 							view: "button",
 							label: "Delete photo",
-							css: "btn",
+							css: "custom-button",
 							width: 140,
 							click: () => {
 								this.deletePhoto();
@@ -135,7 +135,7 @@ export default class ContactsFormView extends JetView {
 					view: "button",
 					localId: "actButton",
 					label: "",
-					css: "btn",
+					css: "custom-button",
 					align: "right",
 					width: 100,
 					click: () => {
@@ -146,7 +146,7 @@ export default class ContactsFormView extends JetView {
 					view: "button",
 					label: "Cancel",
 					localId: "cancelButton",
-					css: "btn",
+					css: "custom-button",
 					align: "right",
 					width: 100,
 					click: () => {
