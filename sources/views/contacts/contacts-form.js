@@ -264,16 +264,17 @@ export default class ContactsFormView extends JetView {
 		const data = contacts;
 
 		if (form.validate()) {
-			const formItem = form.getValues();
+			let formItem = form.getValues();
 			const formItemId = formItem.id;
 
 			if (form.isDirty()) {
 				// Protection against XSS
 				const unKeys = ["Birthday", "StartDate", "StatusID", "id", "value", "Photo"];
-				Object.keys(formItem).filter(key => unKeys.indexOf(key) === -1)
-					.forEach((key) => {
-						formItem[key] = webix.template.escape(formItem[key]);
-					});
+				formItem = Object.entries(formItem).reduce((acc, [key, value]) => {
+					acc[key] = unKeys.includes(key) ? value : webix.template.escape(value);
+						return acc;
+					}, {});
+				console.log(formItem)
 
 				formItem.Birthday = this.parser(formItem.Birthday || new Date());
 				formItem.StartDate = this.parser(formItem.StartDate || new Date());
