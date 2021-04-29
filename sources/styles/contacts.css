@@ -58,7 +58,7 @@
 .contacts-template_second-row{
     display: flex;
     align-items: center;
-    max-width: 600px;
+    max-width: 900px;
 }
 .contacts-template_photo{
     width: 150px;
@@ -105,5 +105,7 @@
     margin-right: 10px;
 }
 .contacts-template_status{
-    padding-left: 60px;
+    display: block;
+    width: 154px;
+    text-align: center;
 }

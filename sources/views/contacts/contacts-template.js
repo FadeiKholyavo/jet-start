@@ -21,7 +21,7 @@ export default class ContactsTemplateView extends JetView {
 						},
 						template(obj) {
 							const statusItem = statuses.getItem(obj.StatusID)
-							const statusValue = obj && obj.StatusID && statusItem &&statusItem.Value;
+							const statusValue = obj && obj.StatusID && statusItem && statusItem.Value;
 							const userName = `<span class="contacts-template_name">
 												${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}
 											</span>`;
@@ -51,7 +51,7 @@ export default class ContactsTemplateView extends JetView {
                                             </div>     
                                         </div>     
                                         <div class="contacts-template_third-row">
-                                            ${userStatus}
+                                            <span class="contacts-template_status">${statusValue || "-"}</span>
                                         </div>
                                     </div> 
                                     </div>`;
