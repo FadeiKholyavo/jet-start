@@ -148,6 +148,7 @@ export default class ContactsTemplateView extends JetView {
 	}
 
 	deleteContact() {
+		debugger;
 		webix.confirm({
 			title: "Contact deleting",
 			text: "Do you really want to delete this contact?"
@@ -156,13 +157,13 @@ export default class ContactsTemplateView extends JetView {
 			const contact = contacts.getItem(idParam);
 			if(contact){
 				const contactId = contact.id;
-				const contactsFirstId = contacts.getFirstId();
 				contacts.remove(contactId);
 				activities.find(obj => obj.ContactID === contactId)
 							.forEach((obj) => {
 								activities.remove(obj.id);
 							});
 
+				const contactsFirstId = contacts.getFirstId();
 				if (contactsFirstId) {
 					this.getParentView().contactsList.select(contactsFirstId);
 				}
