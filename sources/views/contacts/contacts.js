@@ -1,7 +1,6 @@
 import {JetView} from "webix-jet";
 
-import contacts from "../models/contacts";
-import ContactsTemplate from "./contacts-template";
+import contacts from "../../models/contacts";
 
 export default class ContactsView extends JetView {
 	config() {
@@ -16,7 +15,7 @@ export default class ContactsView extends JetView {
 			template(obj) {
 				return `<div class="contacts-list">
                             <span class="contacts-list_photo">
-                                ${(obj && obj.Photo && `<img src="${obj.Photo}" width="50">`) || "<span class=\"far fa-user\"></span>"}
+                                ${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}
                             </span>
                             <div class="contacts-list_info">
                                 <span class="contacts-list_name">
@@ -34,11 +33,34 @@ export default class ContactsView extends JetView {
 				}
 			}
 		};
+		const addButton = {
+			view: "button",
+			localId: "addButton",
+			label: "Add contact",
+			type: "icon",
+			icon: "fas fa-plus-square",
+			css: "custom-button",
+			click: () => {
+				this.contactsList.define({disabled: true});
+				this.addButton.disable();
+				this.show("contacts-form?action=Add").then(() => {
+					contacts.waitData.then(() => {
+						this.contactsList.unselectAll();
+					});
+				});
+			}
+		};
 
 		const ui = {
 			cols: [
-				contactsList,
-				ContactsTemplate
+				{
+					rows: [
+						contactsList,
+						addButton,
+						{height: 10}
+					]
+				},
+				{$subview: true}
 			]
 		};
 		return ui;
@@ -47,6 +69,30 @@ export default class ContactsView extends JetView {
 	init() {
 		this.contactsList = this.$$("contactsList");
 		this.contactsList.sync(contacts);
+		this.addButton = this.$$("addButton");
+
+		this.on(this.app, "Contacts:onAfterContactAdd", (obj) => {
+			this.contactsList.define({disabled: false});
+			this.addButton.enable();
+			if (obj) {
+				this.contactsList.select(obj.id);
+			}
+		});
+	}
+
+	ready() {
+		contacts.waitData.then(() => {
+			if (contacts.getFirstId()) {
+				this.show("contacts-template");
+				if (!this.addButton.isEnabled()) {
+					this.addButton.enable();
+				}
+			}
+			else {
+				this.show("contacts-form?action=Add");
+				this.addButton.disable();
+			}
+		});
 	}
 
 	urlChange() {
@@ -61,3 +107,4 @@ export default class ContactsView extends JetView {
 		});
 	}
 }
+

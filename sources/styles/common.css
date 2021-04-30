@@ -1,0 +1,22 @@
+button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #475466 !important;
+    border-radius: 5px !important;
+    background-color: transparent !important;
+}
+.custom-button button{
+    border: 1px solid #475466 !important;
+}
+.custom-button button:hover{
+    background-color: #8189a7a2 !important;
+}
+button .webix_icon_btn{
+    font-size: 16px;
+    color: #475466 !important;
+}
+
+input, select, textarea, .webix_inp_static{
+    border-radius: 5px !important;
+}

@@ -1,11 +1,17 @@
 @import url("./contacts.css");
 @import url("./activties.css");
+@import url("./common.css");
 
 .app_header.webix_header{
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 20vw;
     font-size: 24px;
+}
+.app_header-big.webix_header{
+    font-size: 48px;
+    padding: 20px 0 40px 20px;
+    color: #000;
 }
 .app_layout.webix_layout_clean{
 	background: #EBEDF0;

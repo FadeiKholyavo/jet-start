@@ -31,6 +31,7 @@ export default class CommonPopupView extends JetView {
 				{
 					view: "richselect",
 					name: "ContactID",
+					localId: "ContactID",
 					label: "Contact",
 					invalidMessage: "Contact cannot be empty",
 					options: contacts
@@ -70,7 +71,7 @@ export default class CommonPopupView extends JetView {
 								{
 									view: "button",
 									label: this.buttonName,
-									css: "btn",
+									css: "custom-button",
 									align: "right",
 									width: 100,
 									click: () => {
@@ -80,7 +81,7 @@ export default class CommonPopupView extends JetView {
 								{
 									view: "button",
 									label: "Cancel",
-									css: "btn",
+									css: "custom-button",
 									align: "right",
 									width: 100,
 									click: () => {
@@ -110,7 +111,16 @@ export default class CommonPopupView extends JetView {
 	}
 
 	init() {
+		const contactId = this.getParam("user", true);
 		this.form = this.$$("form");
+		this.contactReachSelect = this.$$("ContactID");
+
+		if (contactId) {
+			this.contactReachSelect.define({
+				readonly: true,
+				value: contactId
+			});
+		}
 
 		if (this.item) {
 			this.item.Time = this.item.DueDate;
@@ -148,18 +158,13 @@ export default class CommonPopupView extends JetView {
 				// Protection against XSS
 				formItem.Details = webix.template.escape(formItem.Details);
 
-				const time = webix.i18n.dateFormatDate(formItem.Time);
-				const date = webix.i18n.dateFormatDate(formItem.Date);
-				if (!!time && !!date) {
-					formItem.DueDate = new Date(
-						date.getFullYear(),
-						date.getMonth(), date.getDate(),
-						time.getHours(), time.getMinutes()
-					);
-				}
-				else {
-					formItem.DueDate = new Date();
-				}
+				const time = webix.i18n.dateFormatDate(formItem.Time) || new Date();
+				const date = webix.i18n.dateFormatDate(formItem.Date) || new Date();
+				formItem.DueDate = new Date(
+					date.getFullYear(),
+					date.getMonth(), date.getDate(),
+					time.getHours(), time.getMinutes()
+				);
 
 				if (data.exists(formItemId)) {
 					form.setDirty(false);

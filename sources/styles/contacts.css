@@ -12,6 +12,10 @@
     line-height: 45px;
     overflow: hidden;
 }
+.contacts-list_photo img{
+    height: 45px;
+    width: 45px;
+}
 .contacts-list_info{
     padding-left: 20px;
     display: flex;
@@ -36,7 +40,17 @@
 .contacts-template{
     display: flex;
     flex-direction: column;
-
+}
+.contacts-template ul{
+    max-width: 200px;
+}
+.contacts-template ul:nth-of-type(1){
+    margin-right: 100px;
+}
+.contacts-template ul li{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .contacts-template_first-row{
     padding-top: 30px;
@@ -44,6 +58,7 @@
 .contacts-template_second-row{
     display: flex;
     align-items: center;
+    max-width: 900px;
 }
 .contacts-template_photo{
     width: 150px;
@@ -54,6 +69,19 @@
     text-align: center;
     line-height: 45px;
     overflow: hidden;
+}
+.contacts-template_photo img{
+    width: 150px;
+    height: 150px;
+}
+.contacts-template_photo-big img{
+    width: 250px;
+    height: 250px;
+}
+.contacts-template_photo-big{
+    width: 250px;
+    height: 250px;
+    font-size: 250px;
 }
 .contacts-template_info{
     display: flex;
@@ -77,24 +105,7 @@
     margin-right: 10px;
 }
 .contacts-template_status{
-    padding-left: 60px;
-}
-
-button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #475466 !important;
-    border-radius: 5px !important;
-    background-color: transparent !important;
-}
-.btn button{
-    border: 1px solid #475466 !important;
-}
-.btn button:hover{
-    background-color: #8189a7a2 !important;
-}
-button .webix_icon_btn{
-    font-size: 16px;
-    color: #475466 !important;
+    display: block;
+    width: 154px;
+    text-align: center;
 }
