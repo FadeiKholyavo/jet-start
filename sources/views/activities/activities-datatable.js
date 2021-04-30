@@ -32,7 +32,7 @@ export default class ActivitiesView extends JetView {
 					id: "TypeID",
 					header: [{text: "Activity type"}, {content: "selectFilter"}],
 					options: activitiesType,
-					sort: "string",
+					sort: "text",
 					template(obj) {
 						const activityTypeItem = activitiesType.getItem(obj.TypeID);
 						const activityTypeValue = activityTypeItem && activityTypeItem.Value;
@@ -111,6 +111,7 @@ export default class ActivitiesView extends JetView {
 
 	filterContactActivities(contactId) {
 		this.data.waitData.then(() => {
+			this.activitiesDatatatble.setState({"filter": {}});
 			this.data.filter(obj => String(obj.ContactID) === String(contactId));
 		});
 	}
