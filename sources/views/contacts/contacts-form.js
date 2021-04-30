@@ -235,8 +235,6 @@ export default class ContactsFormView extends JetView {
 		this.header.setValues({action: this.action});
 		this.actionButton.setValue((this.action === "Edit" && "Save") || "Add");
 		this.parser = webix.Date.dateToStr("%Y-%m-%d");
-		this.contactsList = this.getParentView().contactsList;
-		this.addButton = this.getParentView().addButton;
 	}
 
 	urlChange() {
@@ -305,13 +303,9 @@ export default class ContactsFormView extends JetView {
 
 		form.clear();
 		form.clearValidation();
-		this.addButton.enable();
-		this.contactsList.define({select: true});
 
-		if (obj) {
-			this.contactsList.select(obj.id);
-		}
-
+		this.app.callEvent("Contacts:onAfterContactAdd", [obj]);
+	
 		this.show("contacts-template");
 	}
 

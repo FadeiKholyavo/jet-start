@@ -71,6 +71,14 @@ export default class ContactsView extends JetView {
 		this.contactsList = this.$$("contactsList");
 		this.contactsList.sync(contacts);
 		this.addButton = this.$$("addButton");
+
+		this.on(this.app, "Contacts:onAfterContactAdd", (obj) => {
+			this.contactsList.define({select: true});
+			this.addButton.enable();
+			if (obj) {
+				this.contactsList.select(obj.id);
+			}
+		});
 	}
 
 	ready() {
