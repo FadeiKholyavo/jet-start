@@ -42,7 +42,13 @@ export default class ContactsView extends JetView {
 			css: "custom-button",
 			click: () => {
 				this.contactsList.define({select: false});
-				this.show("contacts-form?action=Add new");
+				this.addButton.disable();
+				this.show("contacts-form?action=Add new").then(() => {
+					contacts.waitData.then(()=>{
+						this.contactsList.unselectAll();
+					})
+					
+				});				
 			}
 		};
 

@@ -237,12 +237,10 @@ export default class ContactsFormView extends JetView {
 		this.parser = webix.Date.dateToStr("%Y-%m-%d");
 		this.contactsList = this.getParentView().contactsList;
 		this.addButton = this.getParentView().addButton;
-		this.addButton.disable();
 	}
 
 	urlChange() {
 		const id = this.getParam("user");
-		const action = this.getParam("action");
 		webix.promise.all([
 			contacts.waitData,
 			statuses.waitData
@@ -252,9 +250,6 @@ export default class ContactsFormView extends JetView {
 			}
 			if (!contacts.getFirstId()) {
 				this.cancelButton.hide();
-			}
-			if (action === "Add new") {
-				this.contactsList.unselectAll();
 			}
 		});
 	}
