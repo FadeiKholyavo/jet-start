@@ -232,7 +232,7 @@ export default class ContactsFormView extends JetView {
 		this.cancelButton = this.$$("cancelButton");
 		this.contactPhoto = this.$$("contactPhoto");
 		this.action = this.getParam("action") || "Set";
-		this.header.setValues({action: this.action});
+		this.header.setValues({action: (this.action === "Edit" && this.action) || (this.action + " new")});
 		this.actionButton.setValue((this.action === "Edit" && "Save") || "Add");
 		this.parser = webix.Date.dateToStr("%Y-%m-%d");
 	}

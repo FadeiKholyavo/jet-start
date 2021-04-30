@@ -43,7 +43,7 @@ export default class ContactsView extends JetView {
 			click: () => {
 				this.contactsList.define({disabled: true});
 				this.addButton.disable();
-				this.show("contacts-form?action=Add new").then(() => {
+				this.show("contacts-form?action=Add").then(() => {
 					contacts.waitData.then(()=>{
 						this.contactsList.unselectAll();
 					})
@@ -90,7 +90,7 @@ export default class ContactsView extends JetView {
 				}
 			}
 			else {
-				this.show("contacts-form?action=Add new");
+				this.show("contacts-form?action=Add");
 				this.addButton.disable();
 			}
 		});
