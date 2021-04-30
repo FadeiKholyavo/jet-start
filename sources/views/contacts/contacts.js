@@ -41,7 +41,7 @@ export default class ContactsView extends JetView {
 			icon: "fas fa-plus-square",
 			css: "custom-button",
 			click: () => {
-				this.contactsList.define({select: false});
+				this.contactsList.define({disabled: true});
 				this.addButton.disable();
 				this.show("contacts-form?action=Add new").then(() => {
 					contacts.waitData.then(()=>{
@@ -73,7 +73,7 @@ export default class ContactsView extends JetView {
 		this.addButton = this.$$("addButton");
 
 		this.on(this.app, "Contacts:onAfterContactAdd", (obj) => {
-			this.contactsList.define({select: true});
+			this.contactsList.define({disabled: false});
 			this.addButton.enable();
 			if (obj) {
 				this.contactsList.select(obj.id);
