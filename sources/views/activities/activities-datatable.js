@@ -111,7 +111,7 @@ export default class ActivitiesView extends JetView {
 
 	filterContactActivities(contactId) {
 		this.data.waitData.then(() => {
-			this.activitiesDatatatble.setState({"filter": {}});
+			this.activitiesDatatatble.setState({filter: {}});
 			this.data.filter(obj => String(obj.ContactID) === String(contactId));
 		});
 	}

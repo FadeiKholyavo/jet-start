@@ -44,11 +44,10 @@ export default class ContactsView extends JetView {
 				this.contactsList.define({disabled: true});
 				this.addButton.disable();
 				this.show("contacts-form?action=Add").then(() => {
-					contacts.waitData.then(()=>{
+					contacts.waitData.then(() => {
 						this.contactsList.unselectAll();
-					})
-					
-				});				
+					});
+				});
 			}
 		};
 
