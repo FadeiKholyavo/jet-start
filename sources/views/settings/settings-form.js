@@ -1,7 +1,5 @@
 import {JetView} from "webix-jet";
 
-import activitiesType from "../../models/activities-type";
-
 export default class PopupFormView extends JetView {
 	constructor(app, name, data) {
 		super(app, name);
@@ -9,6 +7,7 @@ export default class PopupFormView extends JetView {
 	}
 
 	config() {
+        const icons = ["pen","flag","clock","phone","comment","cogs","user","plus","wrench","pause","bed","futbol","passport","walking","wine-glass-alt","utensils","car","plane"];
 		const form = {
 			view: "form",
 			localId: "form",
@@ -26,6 +25,12 @@ export default class PopupFormView extends JetView {
 					label: "Icon",
                     labelWidth: 140,
 					invalidMessage: "Icon cannot be empty",
+                    options: {
+						body:{
+							data: icons,
+							template: `#value#  <span class="fas fa-#value#"></span>`
+						}
+					}
 				},
                 {
 					cols: [
