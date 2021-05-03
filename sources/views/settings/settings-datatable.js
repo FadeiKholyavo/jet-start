@@ -1,5 +1,7 @@
 import {JetView} from "webix-jet";
 
+import PopupForm from "./settings-form";
+
 export default class SettingsDatatableView extends JetView {
 	constructor(app, name, data, buttonValue) {
 		super(app, name);
@@ -23,6 +25,7 @@ export default class SettingsDatatableView extends JetView {
 				},
 				{
 					id: "Icon",
+					sort: "string",
 					header: "Icon",
 					width: 150
 				},
@@ -45,6 +48,10 @@ export default class SettingsDatatableView extends JetView {
 				"wxi-trash": (e, id) => {
 					this.deleteItem(id);
 					return false;
+				},
+				"wxi-pencil": (e, id) => {
+					const item = this.data.getItem(id);
+					this.popup.showWindow(id, item, this.buttonValue);
 				}
 			}
 		};
@@ -58,7 +65,7 @@ export default class SettingsDatatableView extends JetView {
 			inputWidth: 170,
 			align: "right",
 			click: () => {
-				
+				this.popup.showWindow(null, null, this.buttonValue);
 			}
 		};
 
@@ -83,6 +90,7 @@ export default class SettingsDatatableView extends JetView {
 	init() {
 		this.datatable = this.$$("datatable");
 		this.datatable.sync(this.data);
+		this.popup = this.ui(new PopupForm(this.app, "", this.data));
 	}
 
 	deleteItem(tablelItemId) {
