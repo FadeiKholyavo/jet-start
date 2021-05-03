@@ -36,7 +36,8 @@ export default class ActivitiesView extends JetView {
 					template(obj) {
 						const activityTypeItem = activitiesType.getItem(obj.TypeID);
 						const activityTypeValue = activityTypeItem && activityTypeItem.Value;
-						return activityTypeValue || "Status";
+						const icon = activityTypeItem && activityTypeItem.Icon
+						return `${activityTypeValue}   <span class="fas fa-${icon}"></span>` || "Status";
 					},
 					width: 150
 				},
