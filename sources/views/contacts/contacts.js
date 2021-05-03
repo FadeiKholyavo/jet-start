@@ -42,6 +42,7 @@ export default class ContactsView extends JetView {
 			css: "custom-button",
 			click: () => {
 				this.contactsList.define({disabled: true});
+				this.contactsFilter.disable();
 				this.addButton.disable();
 				this.show("contacts-form?action=Add").then(() => {
 					contacts.waitData.then(() => {
@@ -53,12 +54,12 @@ export default class ContactsView extends JetView {
 
 		const contactsFilter = {
 			view:"text", 
-			localId: "listInput",
+			localId: "contactsFilter",
 			placeholder:"type to find matching contacts",
 			on:{
 				"onTimedKeyPress": function(){
 					const value = webix.template.escape(this.getValue().toLowerCase());
-					this.$scope.contactsFilter(value);
+					this.$scope.filterContacts(value);
 				}
 			}
 		}
@@ -81,15 +82,28 @@ export default class ContactsView extends JetView {
 
 	init() {
 		this.contactsList = this.$$("contactsList");
+		this.contactsFilter = this.$$("contactsFilter");
 		this.contactsList.sync(contacts);
 		this.addButton = this.$$("addButton");
 
 		this.on(this.app, "Contacts:onAfterContactAdd", (obj) => {
-			this.contactsList.define({disabled: false});
+			this.contactsList.define({
+				disabled: false,
+				select: true
+			});
+			this.contactsFilter.enable();
 			this.addButton.enable();
 			if (obj) {
 				this.contactsList.select(obj.id);
 			}
+		});
+		this.on(this.app, "Contacts:onAfterGetListFirstId", (contactsFirstId) => {
+			this.contactsList.select(contactsFirstId);
+		});
+		this.on(this.app, "Contacts:onContactEdit", () => {
+			this.contactsList.define({select: false});
+			this.addButton.disable();
+			this.contactsFilter.disable();
 		});
 	}
 
@@ -119,7 +133,7 @@ export default class ContactsView extends JetView {
 			}
 		});
 	}
-	contactsFilter(value){
+	filterContacts(value){
 		const contactsList = this.contactsList;		
 		const unKeys = ["LastName", "FirstName", "Email", "Company", "Job", "Skype"];		
 		contactsList.filter(function(obj){

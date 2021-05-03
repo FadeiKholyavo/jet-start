@@ -86,7 +86,7 @@ export default class ContactsTemplateView extends JetView {
 										icon: "fas fa-edit",
 										autowidth: true,
 										click: () => {
-											this.contactList.define({select: false});
+											this.app.callEvent("Contacts:onContactEdit", []);
 											this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`);
 										}
 									}
@@ -173,7 +173,7 @@ export default class ContactsTemplateView extends JetView {
 
 				const contactsFirstId = contacts.getFirstId();
 				if (contactsFirstId) {
-					this.getParentView().contactsList.select(contactsFirstId);
+					this.app.callEvent("Contacts:onAfterGetListFirstId", [contactsFirstId]);
 				}
 				else {
 					this.show("contacts-form?action=Add new");
