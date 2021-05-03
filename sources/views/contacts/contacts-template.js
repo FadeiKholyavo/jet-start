@@ -98,6 +98,7 @@ export default class ContactsTemplateView extends JetView {
 				]
 			};
 			const ui = {
+				localId: "contactsWindow",
 				rows: [
 					contactTemplate,
 					{
@@ -136,6 +137,14 @@ export default class ContactsTemplateView extends JetView {
 	init() {
 		this.contactsTemplate = this.$$("contactsTemplate");
 		this.contactList = this.getParentView().contactsList;
+
+		this.on(this.app, "ContactsTemplate:onAfterContactSelect", (flag) => {
+			if(flag){
+				this.$$("contactsWindow").show();
+			}else{
+				this.$$("contactsWindow").hide();
+			}
+		});
 	}
 
 	urlChange() {

@@ -51,10 +51,23 @@ export default class ContactsView extends JetView {
 			}
 		};
 
+		const contactsFilter = {
+			view:"text", 
+			localId: "listInput",
+			placeholder:"type to find matching contacts",
+			on:{
+				"onTimedKeyPress": function(){
+					const value = webix.template.escape(this.getValue().toLowerCase());
+					this.$scope.contactsFilter(value);
+				}
+			}
+		}
+
 		const ui = {
 			cols: [
 				{
 					rows: [
+						contactsFilter,
 						contactsList,
 						addButton,
 						{height: 10}
@@ -105,6 +118,26 @@ export default class ContactsView extends JetView {
 				this.contactsList.select(contacts.getFirstId());
 			}
 		});
+	}
+	contactsFilter(value){
+		const contactsList = this.contactsList;		
+		const unKeys = ["LastName", "FirstName", "Email", "Company", "Job", "Skype"];		
+		contactsList.filter(function(obj){
+			let info = Object.entries(obj).reduce((acc, [key, value]) => {
+				acc += unKeys.includes(key) ? ` ${value}` : "";
+				return acc;
+			}, String());
+			 return info.toLowerCase().indexOf(value) !== -1;
+		})
+		const firstId = contactsList.getFirstId();
+		const selectedId = contactsList.getSelectedId();
+		if(!selectedId && firstId){
+			contactsList.select(firstId);
+			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [true]);
+		}
+		if(!firstId){
+			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [false]);
+		}
 	}
 }
 
