@@ -26,8 +26,12 @@ export default class SettingsDatatableView extends JetView {
 				{
 					id: "Icon",
 					sort: "string",
-					header: "Icon",
-					width: 150
+					header: {text:"Icon", css: "activities_columns-center"},
+					width: 100,
+					css: "activities_columns-center",
+					template: obj => {
+						return `<span class="fas fa-${obj.Icon}">`
+					}
 				},
                 {
 					id: "Edit",

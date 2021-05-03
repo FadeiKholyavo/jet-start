@@ -44,7 +44,12 @@ export default class ContactsFormView extends JetView {
 					label: "Status",
 					invalidMessage: "Status cannot be empty",
 					labelWidth: 150,
-					options: statuses
+					options: {
+						body:{
+							data: statuses,
+							template: `#Value# <span class="fas fa-#Icon#"></span>`
+						}
+					}
 
 				},
 				{
