@@ -78,6 +78,11 @@ export default class ActivitiesView extends JetView {
 					const item = this.data.getItem(id);
 					this.popup.showWindow(id, item);
 				}
+			},
+			on:{
+				"onBeforeFilter":() => {
+					this.app.callEvent("ActivitiesFilters:getDatatable", [this.activitiesDatatatble]);
+				}
 			}
 		};
 
