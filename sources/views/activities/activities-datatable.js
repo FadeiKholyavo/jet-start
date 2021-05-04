@@ -80,11 +80,6 @@ export default class ActivitiesView extends JetView {
 					const item = this.data.getItem(id);
 					this.popup.showWindow(id, item);
 				}
-			},
-			on: {
-				onBeforeFilter: () => {
-					this.app.callEvent("ActivitiesFilters:getDatatable", [this.activitiesDatatatble]);
-				}
 			}
 		};
 
@@ -98,6 +93,8 @@ export default class ActivitiesView extends JetView {
 
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
 		this.popup = this.ui(new CommonPopup(this.app, "", this.data));
+
+		this.app.callEvent("ActivitiesFilters:getDatatable", [this.activitiesDatatatble]);
 
 		this.activitiesDatatatble.sync(this.data);
 

@@ -1,7 +1,5 @@
 import {JetView} from "webix-jet";
 
-import activities from "../../models/activities";
-
 export default class ActivitiesFiltersView extends JetView {
 	config() {
 		const _ = this.app.getService("locale")._;
@@ -17,62 +15,53 @@ export default class ActivitiesFiltersView extends JetView {
 			value: _("All"),
 			options: filters,
 			on: {
-				onChange: (value) => {
-					this.filterActivities(value);
+				onChange: () => {
+					this.datatable.filterByAll();
 				}
 			}
 		};
 		return activitiesFilters;
 	}
 
-	filterActivities(value) {
-		const _ = this.app.getService("locale")._;
-		activities.waitData.then(() => {
-			switch (value) {
-				case _("All"):
-					activities.filter();
-					this.datatable.setState(this.state);
-					break;
-				case _("Overdue"):
-					activities.filter(obj => String(obj.State) === String("Open") && obj.DueDate < new Date());
-					this.datatable.setState(this.state);
-					break;
-				case _("Completed"):
-					activities.filter(obj => String(obj.State) === String("Close"));
-					this.datatable.setState(this.state);
-					break;
-				case _("Today"):
-					activities.filter(obj => this.parser(obj.DueDate) === this.parser(new Date()));
-					this.datatable.setState(this.state);
-					break;
-				case _("Tomorrow"):
-					activities.filter((obj) => {
-						const tomorrowDay = new Date(+new Date() + 1000 * 60 * 60 * 24);
-						return this.parser(obj.DueDate) === this.parser(tomorrowDay);
-					});
-					this.datatable.setState(this.state);
-					break;
-				case _("ThisWeek"):
-					activities.filter(obj => this.checkThisWeek(obj.DueDate));
-					this.datatable.setState(this.state);
-					break;
-				case _("ThisMonth"):
-					activities.filter(obj => obj.DueDate.getMonth() === new Date().getMonth());
-					this.datatable.setState(this.state);
-					break;
-				default:
-					activities.filter();
-					this.datatable.setState(this.state);
-					break;
-			}
-		});
-	}
-
 	init() {
 		this.parser = webix.Date.dateToStr("%Y-%m-%d");
+		const _ = this.app.getService("locale")._;
+
 		this.on(this.app, "ActivitiesFilters:getDatatable", (datatable) => {
-			this.state = datatable.getState();
 			this.datatable = datatable;
+			this.datatable.registerFilter(
+				this.$$("tabbar"),
+				{
+					compare: (cellValue, filterValue, obj) => {
+						switch (filterValue) {
+							case _("All"):
+								return true;
+							case _("Overdue"):
+								return String(obj.State) === String("Open") && obj.DueDate < new Date();
+							case _("Completed"):
+								return String(obj.State) === String("Close");
+							case _("Today"):
+								return this.parser(obj.DueDate) === this.parser(new Date());
+							case _("Tomorrow"): {
+								const tomorrowDay = new Date(+new Date() + 1000 * 60 * 60 * 24);
+								return this.parser(obj.DueDate) === this.parser(tomorrowDay);
+							}
+							case _("ThisWeek"):
+								return this.checkThisWeek(obj.DueDate);
+							case _("ThisMonth"):
+								return obj.DueDate.getMonth() === new Date().getMonth();
+							default:
+								return true;
+						}
+					}
+				},
+				{
+					getValue: view => view.getValue(),
+					setValue: (view, value) => {
+						view.setValue(value);
+					}
+				}
+			);
 		});
 	}
 
