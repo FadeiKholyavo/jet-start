@@ -24,14 +24,14 @@ export default class ContactsFormView extends JetView {
 					name: "FirstName",
 					label: _("FirstName"),
 					labelWidth: 150,
-					invalidMessage: "First name cannot be empty"
+					invalidMessage: _("FNameEmptyMessage")
 				},
 				{
 					view: "text",
 					name: "LastName",
 					label: _("LastName"),
 					labelWidth: 150,
-					invalidMessage: "Last name cannot be empty"
+					invalidMessage: _("LNameEmptyMessage")
 				},
 				{
 					view: "datepicker",
@@ -44,7 +44,6 @@ export default class ContactsFormView extends JetView {
 					view: "richselect",
 					name: "StatusID",
 					label: _("Status"),
-					invalidMessage: "Status cannot be empty",
 					labelWidth: 150,
 					options: {
 						body: {
@@ -171,7 +170,7 @@ export default class ContactsFormView extends JetView {
 					name: "Email",
 					label: "Email",
 					labelWidth: 150,
-					invalidMessage: "Email is the necessary field"
+					invalidMessage: _("EmailEmptyMessage")
 				},
 				{
 					view: "text",
