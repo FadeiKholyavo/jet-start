@@ -99,8 +99,8 @@ export default class SettingsDatatableView extends JetView {
 
 	deleteItem(tablelItemId) {
 		webix.confirm({
-			title: "File deleting",
-			text: "Do you really want to delete this file?"
+			title: "Item deleting",
+			text: "Do you really want to delete this item"
 		}).then(
 			() => {
 				this.data.remove(tablelItemId);
