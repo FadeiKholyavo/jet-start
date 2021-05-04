@@ -2,13 +2,14 @@ import {JetView} from "webix-jet";
 
 export default class ActivitiesView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
 		const addActivityButton = {
 			view: "button",
-			label: "Add activity",
+			label: _("AddActivity"),
 			type: "icon",
 			icon: "fas fa-plus-square",
 			css: "custom-button",
-			inputWidth: 130,
+			inputWidth: 250,
 			align: "right",
 			padding: {
 				right: 10

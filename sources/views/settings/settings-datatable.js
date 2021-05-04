@@ -7,6 +7,7 @@ export default class SettingsDatatableView extends JetView {
 		super(app, name);
 		this.data = data;
 		this.buttonValue = buttonValue;
+		this._ = this.app.getService("locale")._;
 	}
 
 	config() {
@@ -19,14 +20,14 @@ export default class SettingsDatatableView extends JetView {
 			columns: [
 				{
 					id: "Value",
-					header: "Value",
+					header: this._("Value"),
 					sort: "string",
 					fillspace: true
 				},
 				{
 					id: "Icon",
 					sort: "string",
-					header: {text:"Icon", css: "activities_columns-center"},
+					header: {text:this._("Icon"), css: "activities_columns-center"},
 					width: 100,
 					css: "activities_columns-center",
 					template: obj => {
@@ -62,11 +63,11 @@ export default class SettingsDatatableView extends JetView {
 
 		const addButton= {
 			view: "button",
-			label: `Add ${this.buttonValue}`,
+			label: this._(`Add${this.buttonValue}`),
 			type: "icon",
 			icon: "fas fa-plus-square",
 			css: "custom-button",
-			inputWidth: 170,
+			inputWidth: 280,
 			align: "right",
 			click: () => {
 				this.popup.showWindow(null, null, this.buttonValue);
@@ -99,8 +100,8 @@ export default class SettingsDatatableView extends JetView {
 
 	deleteItem(tablelItemId) {
 		webix.confirm({
-			title: "Item deleting",
-			text: "Do you really want to delete this item"
+			title: this._("ItemDeleting"),
+			text: this._("DeleteItemMessage")
 		}).then(
 			() => {
 				this.data.remove(tablelItemId);

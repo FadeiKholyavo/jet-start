@@ -10,6 +10,8 @@ import FilesDatatable from "../files-datatable";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		return statuses.waitData.then(() => {
 			const contactTemplate = {
 				cols: [
@@ -70,7 +72,7 @@ export default class ContactsTemplateView extends JetView {
 								cols: [
 									{
 										view: "button",
-										label: "Delete",
+										label: _("Delete"),
 										css: "custom-button",
 										type: "icon",
 										icon: "fas fa-trash-alt",
@@ -81,7 +83,7 @@ export default class ContactsTemplateView extends JetView {
 									},
 									{
 										view: "button",
-										label: "Edit",
+										label: _("Edit"),
 										css: "custom-button",
 										type: "icon",
 										icon: "fas fa-edit",
@@ -106,7 +108,7 @@ export default class ContactsTemplateView extends JetView {
 						view: "tabview",
 						cells: [
 							{
-								header: "Activities",
+								header: _("Activities"),
 								body: {
 									rows: [
 										new ActivitiesDatatable(this.app, "", activities, false),
@@ -123,7 +125,7 @@ export default class ContactsTemplateView extends JetView {
 								}
 							},
 							{
-								header: "Files",
+								header: _("Files"),
 								body: new FilesDatatable(this.app, "", files)
 							}
 						]
@@ -158,9 +160,10 @@ export default class ContactsTemplateView extends JetView {
 	}
 
 	deleteContact() {
+		const _ = this.app.getService("locale")._;
 		webix.confirm({
-			title: "Contact deleting",
-			text: "Do you really want to delete this contact?"
+			title: _("ContactDeleting"),
+			text: _("ContactDelMessage")
 		}).then(() => {
 			const idParam = this.getParam("user", true);
 			const contact = contacts.getItem(idParam);

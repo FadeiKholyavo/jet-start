@@ -4,6 +4,7 @@ export default class FilesDatatableView extends JetView {
 	constructor(app, name, data) {
 		super(app, name);
 		this.data = data;
+		this._ = this.app.getService("locale")._;
 	}
 
 	config() {
@@ -16,21 +17,21 @@ export default class FilesDatatableView extends JetView {
 			columns: [
 				{
 					id: "Name",
-					header: "Name",
+					header: this._("Name"),
 					checkValue: "Close",
 					sort: "string",
 					fillspace: true
 				},
 				{
 					id: "ChangeDate",
-					header: "Change date",
+					header: this._("ChangeDate"),
 					sort: "date",
 					format: webix.Date.dateToStr("%j %F %Y"),
 					width: 150
 				},
 				{
 					id: "Size",
-					header: "Size",
+					header: this._("Size"),
 					sort: "int",
 					width: 150,
 					template: "#SizeText#"
@@ -54,11 +55,11 @@ export default class FilesDatatableView extends JetView {
 		const filesUploader = {
 			view: "uploader",
 			localId: "filesUploader",
-			label: "Upload file",
+			label: this._("UploadFile"),
 			type: "icon",
 			icon: "fas fa-upload",
 			css: "custom-button",
-			inputWidth: 140,
+			inputWidth: 170,
 			align: "center",
 			autosend: false,
 			on: {
@@ -93,8 +94,8 @@ export default class FilesDatatableView extends JetView {
 
 	deleteItem(tablelItemId) {
 		webix.confirm({
-			title: "File deleting",
-			text: "Do you really want to delete this file?"
+			title: this._("FileDeleting"),
+			text: this._("FileDelMessage")
 		}).then(
 			() => {
 				this.data.remove(tablelItemId);

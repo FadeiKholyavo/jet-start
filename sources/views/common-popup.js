@@ -8,6 +8,7 @@ export default class CommonPopupView extends JetView {
 	constructor(app, name, data) {
 		super(app, name);
 		this.data = data;
+		this._ = this.app.getService("locale")._;
 	}
 
 	config() {
@@ -18,22 +19,22 @@ export default class CommonPopupView extends JetView {
 				{
 					view: "textarea",
 					name: "Details",
-					label: "Deatails",
+					label: this._("Details"),
 					height: 100
 				},
 				{
 					view: "richselect",
 					name: "TypeID",
-					label: "Type",
-					invalidMessage: "Type cannot be empty",
+					label: this._("Type"),
+					invalidMessage: this._("TypeEmptyMessage"),
 					options: activitiesType
 				},
 				{
 					view: "richselect",
 					name: "ContactID",
 					localId: "ContactID",
-					label: "Contact",
-					invalidMessage: "Contact cannot be empty",
+					label: this._("Contact"),
+					invalidMessage: this._("ContactEmptyMessage"),
 					options: contacts
 				},
 				{
@@ -42,14 +43,14 @@ export default class CommonPopupView extends JetView {
 						{
 							view: "datepicker",
 							name: "Date",
-							label: "Date",
+							label: this._("Date"),
 							format: ("%j %F %Y")
 						},
 						{
 							view: "datepicker",
 							type: "time",
 							name: "Time",
-							label: "Time",
+							label: this._("Time"),
 							format: "%H:%i"
 						}
 					]
@@ -59,7 +60,7 @@ export default class CommonPopupView extends JetView {
 					name: "State",
 					uncheckValue: "Open",
 					checkValue: "Close",
-					labelRight: "Complited",
+					labelRight: this._("Complited"),
 					labelWidth: 0
 				},
 				{
@@ -80,7 +81,7 @@ export default class CommonPopupView extends JetView {
 								},
 								{
 									view: "button",
-									label: "Cancel",
+									label: this._("Cancel"),
 									css: "custom-button",
 									align: "right",
 									width: 100,
@@ -101,7 +102,7 @@ export default class CommonPopupView extends JetView {
 		const popup = {
 			view: "window",
 			position: "center",
-			head: `${this.activityName} activity`,
+			head: `${this.activityName}`,
 			modal: true,
 			maxWidth: 700,
 			body: form
@@ -131,7 +132,8 @@ export default class CommonPopupView extends JetView {
 
 	showWindow(settings, item) {
 		this.activityName = (settings && "Edit") || "Add";
-		this.buttonName = (settings && "Save") || "Add";
+		this.activityName = this._(`${this.activityName}Activity`);
+		this.buttonName = this._((settings && "Save") || "Add");
 		this.item = item;
 		this.refresh();
 		this.getRoot().show();
@@ -175,7 +177,7 @@ export default class CommonPopupView extends JetView {
 				}
 
 				webix.message({
-					text: "Validation is succsessful",
+					text: this._("SuccsessValidation"),
 					type: "success",
 					expire: 1000
 				});
@@ -183,7 +185,7 @@ export default class CommonPopupView extends JetView {
 			}
 			else {
 				webix.message({
-					text: "You have not edited the data",
+					text: this._("NotEditedData"),
 					type: "info",
 					expire: 1000
 				});

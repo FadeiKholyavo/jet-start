@@ -9,6 +9,7 @@ export default class ActivitiesView extends JetView {
 		super(app, name);
 		this.data = data;
 		this.isActivityView = flag;
+		this._ = this.app.getService("locale")._;
 	}
 
 	config() {
@@ -30,7 +31,7 @@ export default class ActivitiesView extends JetView {
 					width: 40},
 				{
 					id: "TypeID",
-					header: [{text: "Activity type"}, {content: "selectFilter"}],
+					header: [{text: this._("ActivityType")}, {content: "selectFilter"}],
 					options: activitiesType,
 					sort: "text",
 					template(obj) {
@@ -43,7 +44,7 @@ export default class ActivitiesView extends JetView {
 				},
 				{
 					id: "DueDate",
-					header: [{text: "Due date"}, {content: "dateRangeFilter",
+					header: [{text: this._("DueDate")}, {content: "dateRangeFilter",
 						inputConfig: {format: webix.Date.dateToStr("%j %F %Y")}}],
 					sort: "date",
 					format: webix.Date.dateToStr("%j %F %Y"),
@@ -51,7 +52,7 @@ export default class ActivitiesView extends JetView {
 				},
 				{
 					id: "Details",
-					header: [{text: "Details"}, {content: "textFilter"}],
+					header: [{text: this._("Details")}, {content: "textFilter"}],
 					sort: "string",
 					fillspace: true
 				},
@@ -124,8 +125,8 @@ export default class ActivitiesView extends JetView {
 
 	deleteItem(tablelItemId) {
 		webix.confirm({
-			title: "Activity deleting",
-			text: "Do you really want to delete this activity?"
+			title: this._("ActivityDeleting"),
+			text: this._("ActivityDeletingMessage")
 		}).then(
 			() => {
 				this.data.remove(tablelItemId);
@@ -137,7 +138,7 @@ export default class ActivitiesView extends JetView {
 		this.activitiesDatatatble.config.columns.splice(4, 0,
 			{
 				id: "ContactID",
-				header: [{text: "Contact"}, {content: "selectFilter"}],
+				header: [{text: this._("Contact")}, {content: "selectFilter"}],
 				options: contacts,
 				sort: "text",
 				template(obj) {

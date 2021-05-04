@@ -4,6 +4,8 @@ import contacts from "../../models/contacts";
 
 export default class ContactsView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		const contactsList = {
 			view: "list",
 			localId: "contactsList",
@@ -36,7 +38,7 @@ export default class ContactsView extends JetView {
 		const addButton = {
 			view: "button",
 			localId: "addButton",
-			label: "Add contact",
+			label: _("AddContact"),
 			type: "icon",
 			icon: "fas fa-plus-square",
 			css: "custom-button",
@@ -55,7 +57,7 @@ export default class ContactsView extends JetView {
 		const contactsFilter = {
 			view:"text", 
 			localId: "contactsFilter",
-			placeholder:"type to find matching contacts",
+			placeholder: _("Placeholder"),
 			on:{
 				"onTimedKeyPress": function(){
 					const value = webix.template.escape(this.getValue().toLowerCase());

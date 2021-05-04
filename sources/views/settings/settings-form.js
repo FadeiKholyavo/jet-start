@@ -4,6 +4,7 @@ export default class PopupFormView extends JetView {
 	constructor(app, name, data) {
 		super(app, name);
 		this.data = data;
+        this._ = this.app.getService("locale")._;
 	}
 
 	config() {
@@ -15,16 +16,16 @@ export default class PopupFormView extends JetView {
 				{
 					view: "text",
 					name: "Value",
-					label: `${this.name} name`,
-                    labelWidth: 140,
-					invalidMessage: "Name cannot be empty",
+					label: this._("Value"),
+                    labelWidth: 100,
+					invalidMessage: this._("NameCannotBeEmpty"),
 				},
 				{
 					view: "richselect",
 					name: "Icon",
-					label: "Icon",
-                    labelWidth: 140,
-					invalidMessage: "Icon cannot be empty",
+					label: this._("Icon"),
+                    labelWidth: 100,
+					invalidMessage: this._("IconCannotBeEmpty"),
                     options: {
 						body:{
 							data: icons,
@@ -50,7 +51,7 @@ export default class PopupFormView extends JetView {
 								},
 								{
 									view: "button",
-									label: "Cancel",
+									label: this._("Cancel"),
 									css: "custom-button",
 									align: "right",
 									width: 100,
@@ -71,7 +72,7 @@ export default class PopupFormView extends JetView {
 		const popup = {
 			view: "window",
 			position: "center",
-			head: `${this.activityName} ${this.name}`,
+			head: `${this.popupHeader}`,
 			modal: true,
 			maxWidth: 700,
 			body: form
@@ -90,7 +91,8 @@ export default class PopupFormView extends JetView {
 	showWindow(settings, item, name) {
         this.name = name;
 		this.activityName = (settings && "Edit") || "Add";
-		this.buttonName = (settings && "Save") || "Add";
+		this.popupHeader = this._(`${this.activityName}${this.name}`);
+		this.buttonName = this._((settings && "Save") || "Add");
 		this.item = item;
 		this.refresh();
 		this.getRoot().show();
@@ -126,7 +128,7 @@ export default class PopupFormView extends JetView {
 				}
 
 				webix.message({
-					text: "Validation is succsessful",
+					text: this._("SuccsessValidation"),
 					type: "success",
 					expire: 1000
 				});
@@ -134,7 +136,7 @@ export default class PopupFormView extends JetView {
 			}
 			else {
 				webix.message({
-					text: "You have not edited the data",
+					text: this._("NotEditedData"),
 					type: "info",
 					expire: 1000
 				});

@@ -3,11 +3,17 @@ import activities from "../../models/activities";
 
 export default class ActivitiesFiltersView extends JetView {
 	config() {
-		const filters = ["All", "Overdue", "Completed", "Today", "Tomorrow", "This week", "This month"];
+        const _ = this.app.getService("locale")._;
+		const filters = [ 
+            "All", "Overdue", 
+            "Completed", "Today", 
+            "Tomorrow", "ThisWeek", 
+            "ThisMonth"]
+            .map(el => _(el));
 		const activitiesFilters = {
 			view: "tabbar", 
 			id: "tabbar", 
-			value: "All", 
+			value: _("All"), 
 			options: filters,
 			on: {
 				onChange: value => {
@@ -18,37 +24,37 @@ export default class ActivitiesFiltersView extends JetView {
 		return activitiesFilters;
 	}
     filterActivities(value){
+        const _ = this.app.getService("locale")._;
         activities.waitData.then(() => {
             switch(value){
-                case "All": 
+                case _("All"): 
                     activities.filter();
                     this.datatable.setState(this.state);
                     break;
-                case "Overdue":
+                case _("Overdue"):
                     activities.filter(obj => String(obj.State) === String("Open"));
                     this.datatable.setState(this.state);
                     break;
-                case "Completed":
+                case _("Completed"):
                     activities.filter(obj => String(obj.State) === String("Close"));
                     this.datatable.setState(this.state);
                     break;
-                case "Today":
+                case _("Today"):
                     activities.filter(obj => this.parser(obj.DueDate) === this.parser(new Date()));
                     this.datatable.setState(this.state);
                     break;
-                case "Tomorrow":
+                case _("Tomorrow"):
                     activities.filter(obj => this.parser(obj.DueDate) === this.parser(new Date(+new Date() + 1000*60*60*24)));
                     this.datatable.setState(this.state);
                     break;
-                case "This week":
+                case _("ThisWeek"):
                     activities.filter(obj => this.checkThisWeek(obj.DueDate));
                     this.datatable.setState(this.state);
                     break;
-                case "This month":
+                case _("ThisMonth"):
                     activities.filter(obj => obj.DueDate.getMonth() === new Date().getMonth());
                     this.datatable.setState(this.state);
                     break;    
-                    default: console.log(1)
             }
 		});
     }

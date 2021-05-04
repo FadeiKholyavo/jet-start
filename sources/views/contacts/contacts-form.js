@@ -5,11 +5,13 @@ import statuses from "../../models/statuses";
 
 export default class ContactsFormView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		const header = {
 			view: "template",
 			type: "header",
 			localId: "header",
-			template: "#action# contact",
+			template: "#action#",
 			css: "webix_header app_header app_header-big",
 			data: {action: ""}
 		};
@@ -20,28 +22,28 @@ export default class ContactsFormView extends JetView {
 				{
 					view: "text",
 					name: "FirstName",
-					label: "First name",
+					label: _("FirstName"),
 					labelWidth: 150,
 					invalidMessage: "First name cannot be empty"
 				},
 				{
 					view: "text",
 					name: "LastName",
-					label: "Last name",
+					label: _("LastName"),
 					labelWidth: 150,
 					invalidMessage: "Last name cannot be empty"
 				},
 				{
 					view: "datepicker",
 					name: "StartDate",
-					label: "Joining date",
+					label: _("JoiningDate"),
 					format: ("%j %F %Y"),
 					labelWidth: 150
 				},
 				{
 					view: "richselect",
 					name: "StatusID",
-					label: "Status",
+					label: _("Status"),
 					invalidMessage: "Status cannot be empty",
 					labelWidth: 150,
 					options: {
@@ -55,25 +57,25 @@ export default class ContactsFormView extends JetView {
 				{
 					view: "text",
 					name: "Job",
-					label: "Job",
+					label: _("Job"),
 					labelWidth: 150
 				},
 				{
 					view: "text",
 					name: "Company",
-					label: "Company",
+					label: _("Company"),
 					labelWidth: 150
 				},
 				{
 					view: "text",
 					name: "Website",
-					label: "Webiste",
+					label: _("Website"),
 					labelWidth: 150
 				},
 				{
 					view: "text",
 					name: "Address",
-					label: "Adress",
+					label: _("Address"),
 					labelWidth: 150
 				}
 			]
@@ -103,7 +105,7 @@ export default class ContactsFormView extends JetView {
 						{},
 						{
 							view: "uploader",
-							label: "Change photo",
+							label: _("ChangePhoto"),
 							css: "custom-button",
 							accept: "imgae/jpeg, imgae/png, imgae/jpg, imgae/JPG",
 							width: 140,
@@ -116,7 +118,7 @@ export default class ContactsFormView extends JetView {
 						},
 						{
 							view: "button",
-							label: "Delete photo",
+							label: _("DeletePhoto"),
 							css: "custom-button",
 							width: 140,
 							click: () => {
@@ -149,7 +151,7 @@ export default class ContactsFormView extends JetView {
 				},
 				{
 					view: "button",
-					label: "Cancel",
+					label: _("Cancel"),
 					localId: "cancelButton",
 					css: "custom-button",
 					align: "right",
@@ -180,13 +182,13 @@ export default class ContactsFormView extends JetView {
 				{
 					view: "text",
 					name: "Phone",
-					label: "Phone",
+					label: _("Phone"),
 					labelWidth: 150
 				},
 				{
 					view: "datepicker",
 					name: "Birthday",
-					label: "Birthday",
+					label: _("Birthday"),
 					format: ("%j %F %Y"),
 					labelWidth: 150
 				},
@@ -231,14 +233,15 @@ export default class ContactsFormView extends JetView {
 	}
 
 	init() {
+		const _ = this.app.getService("locale")._;
 		this.form = this.$$("form");
 		this.header = this.$$("header");
 		this.actionButton = this.$$("actButton");
 		this.cancelButton = this.$$("cancelButton");
 		this.contactPhoto = this.$$("contactPhoto");
 		this.action = this.getParam("action") || "Set";
-		this.header.setValues({action: (this.action === "Edit" && this.action) || (`${this.action} new`)});
-		this.actionButton.setValue((this.action === "Edit" && "Save") || "Add");
+		this.header.setValues({action: _((this.action === "Edit" && `${this.action}Contact`) || (`${this.action}New`))});
+		this.actionButton.setValue(_((this.action === "Edit" && "Save") || "Add"));
 		this.parser = webix.Date.dateToStr("%Y-%m-%d");
 	}
 
@@ -260,6 +263,7 @@ export default class ContactsFormView extends JetView {
 	saveData() {
 		const form = this.form;
 		const data = contacts;
+		const _ = this.app.getService("locale")._;
 
 		if (form.validate()) {
 			let formItem = form.getValues();
@@ -285,7 +289,7 @@ export default class ContactsFormView extends JetView {
 					}
 
 					webix.message({
-						text: "Validation is succsessful",
+						text: _("SuccsessValidation"),
 						type: "success",
 						expire: 1000
 					});
@@ -295,7 +299,7 @@ export default class ContactsFormView extends JetView {
 			}
 			else {
 				webix.message({
-					text: "You have not edited the data",
+					text: _("NotEditedData"),
 					type: "info",
 					expire: 1000
 				});

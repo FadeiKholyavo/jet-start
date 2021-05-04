@@ -49,6 +49,7 @@
     "webpack-dev-server": "^3.11.2"
   },
   "dependencies": {
+    "@wbx/locales": "^8.3.0",
     "webix-jet": "^2.1.3"
   }
 }
