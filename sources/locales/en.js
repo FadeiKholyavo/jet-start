@@ -70,9 +70,9 @@ export default {
 	Status: "Status",
 	EditContact: "Edit contact",
 	AddNew: "Add new contact",
-    EmailEmptyMessage: "Email is a necessary filed",
-    LNameEmptyMessage: "Last name is a necessary filed",
-    FNameEmptyMessage: "First name is a necessary filed",
+	EmailEmptyMessage: "Email is a necessary filed",
+	LNameEmptyMessage: "Last name is a necessary filed",
+	FNameEmptyMessage: "First name is a necessary filed",
 	// contacts-template.js
 	Edit: "Edit",
 	Delete: "Delete",

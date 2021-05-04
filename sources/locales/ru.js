@@ -71,9 +71,9 @@ export default {
 	Status: "Статус",
 	EditContact: "Редактирование контакта",
 	AddNew: "Добавление нового контакта",
-    EmailEmptyMessage: "Email - обязательное поле",
-    LNameEmptyMessage: "Фамилия - обязательное поле",
-    FNameEmptyMessage: "Имя - обязательное поле",
+	EmailEmptyMessage: "Email - обязательное поле",
+	LNameEmptyMessage: "Фамилия - обязательное поле",
+	FNameEmptyMessage: "Имя - обязательное поле",
 	// contacts-template.js
 	Edit: "Редактировать",
 	Delete: "Удалить",

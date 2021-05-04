@@ -27,7 +27,12 @@ export default class CommonPopupView extends JetView {
 					name: "TypeID",
 					label: this._("Type"),
 					invalidMessage: this._("TypeEmptyMessage"),
-					options: activitiesType
+					options: {
+						body: {
+							data: activitiesType,
+							template: "#Value# <span class=\"fas fa-#Icon#\"></span>"
+						}
+					}
 				},
 				{
 					view: "richselect",
