@@ -32,7 +32,7 @@ export default class ActivitiesFiltersView extends JetView {
                     this.datatable.setState(this.state);
                     break;
                 case _("Overdue"):
-                    activities.filter(obj => String(obj.State) === String("Open"));
+                    activities.filter(obj => String(obj.State) === String("Open") && obj.DueDate < new Date());
                     this.datatable.setState(this.state);
                     break;
                 case _("Completed"):
