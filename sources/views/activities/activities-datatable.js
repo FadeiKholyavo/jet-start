@@ -37,7 +37,7 @@ export default class ActivitiesView extends JetView {
 					template(obj) {
 						const activityTypeItem = activitiesType.getItem(obj.TypeID);
 						const activityTypeValue = activityTypeItem && activityTypeItem.Value;
-						const icon = activityTypeItem && activityTypeItem.Icon
+						const icon = activityTypeItem && activityTypeItem.Icon;
 						return (activityTypeValue && `${activityTypeValue}   <span class="fas fa-${icon}"></span>`) || "Type";
 					},
 					width: 150
@@ -81,8 +81,8 @@ export default class ActivitiesView extends JetView {
 					this.popup.showWindow(id, item);
 				}
 			},
-			on:{
-				"onBeforeFilter":() => {
+			on: {
+				onBeforeFilter: () => {
 					this.app.callEvent("ActivitiesFilters:getDatatable", [this.activitiesDatatatble]);
 				}
 			}

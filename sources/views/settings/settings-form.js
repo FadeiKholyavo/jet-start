@@ -4,11 +4,11 @@ export default class PopupFormView extends JetView {
 	constructor(app, name, data) {
 		super(app, name);
 		this.data = data;
-        this._ = this.app.getService("locale")._;
+		this._ = this.app.getService("locale")._;
 	}
 
 	config() {
-        const icons = ["pen","flag","clock","phone","comment","cogs","user","plus","wrench","pause","bed","futbol","passport","walking","wine-glass-alt","utensils","car","plane"];
+		const icons = ["pen", "flag", "clock", "phone", "comment", "cogs", "user", "plus", "wrench", "pause", "bed", "futbol", "passport", "walking", "wine-glass-alt", "utensils", "car", "plane"];
 		const form = {
 			view: "form",
 			localId: "form",
@@ -17,23 +17,23 @@ export default class PopupFormView extends JetView {
 					view: "text",
 					name: "Value",
 					label: this._("Value"),
-                    labelWidth: 100,
-					invalidMessage: this._("NameCannotBeEmpty"),
+					labelWidth: 100,
+					invalidMessage: this._("NameCannotBeEmpty")
 				},
 				{
 					view: "richselect",
 					name: "Icon",
 					label: this._("Icon"),
-                    labelWidth: 100,
+					labelWidth: 100,
 					invalidMessage: this._("IconCannotBeEmpty"),
-                    options: {
-						body:{
+					options: {
+						body: {
 							data: icons,
-							template: `#value#  <span class="fas fa-#value#"></span>`
+							template: "#value#  <span class=\"fas fa-#value#\"></span>"
 						}
 					}
 				},
-                {
+				{
 					cols: [
 						{
 							margin: 20,
@@ -83,13 +83,13 @@ export default class PopupFormView extends JetView {
 
 	init() {
 		this.form = this.$$("form");
-        if (this.item) {
+		if (this.item) {
 			this.form.setValues(this.item);
 		}
 	}
 
 	showWindow(settings, item, name) {
-        this.name = name;
+		this.name = name;
 		this.activityName = (settings && "Edit") || "Add";
 		this.popupHeader = this._(`${this.activityName}${this.name}`);
 		this.buttonName = this._((settings && "Save") || "Add");

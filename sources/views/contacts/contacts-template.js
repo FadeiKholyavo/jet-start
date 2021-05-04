@@ -38,7 +38,7 @@ export default class ContactsTemplateView extends JetView {
                                                     <li><span class="far fa-calendar-alt"></span>${(obj && obj.Birthday) || "-"}</li>
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
                                                 </ul>`;
-							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || `<span class="far fa-user"></span>`}`;
+							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}`;
 							const userStatus = `<span class="contacts-template_status">${statusValue || "-"} <span class="fas fa-${icon}"></span></span>`;
 
 							return `<div class="contacts-template">
@@ -142,9 +142,10 @@ export default class ContactsTemplateView extends JetView {
 		this.contactList = this.getParentView().contactsList;
 
 		this.on(this.app, "ContactsTemplate:onAfterContactSelect", (flag) => {
-			if(flag){
+			if (flag) {
 				this.$$("contactsWindow").show();
-			}else{
+			}
+			else {
 				this.$$("contactsWindow").hide();
 			}
 		});

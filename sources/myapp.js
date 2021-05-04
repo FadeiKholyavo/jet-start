@@ -14,8 +14,8 @@ export default class MyApp extends JetApp {
 				contacts: "contacts.contacts",
 				"contacts-template": "contacts.contacts-template",
 				"contacts-form": "contacts.contacts-form",
-				"activities": "activities.activities",
-				"settings": "settings.settings"
+				activities: "activities.activities",
+				settings: "settings.settings"
 			}
 		};
 

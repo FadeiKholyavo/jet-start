@@ -55,16 +55,16 @@ export default class ContactsView extends JetView {
 		};
 
 		const contactsFilter = {
-			view:"text", 
+			view: "text",
 			localId: "contactsFilter",
 			placeholder: _("Placeholder"),
-			on:{
-				"onTimedKeyPress": function(){
+			on: {
+				onTimedKeyPress() {
 					const value = webix.template.escape(this.getValue().toLowerCase());
 					this.$scope.filterContacts(value);
 				}
 			}
-		}
+		};
 
 		const ui = {
 			cols: [
@@ -135,23 +135,24 @@ export default class ContactsView extends JetView {
 			}
 		});
 	}
-	filterContacts(value){
-		const contactsList = this.contactsList;		
-		const unKeys = ["LastName", "FirstName", "Email", "Company", "Job", "Skype"];		
-		contactsList.filter(function(obj){
-			let info = Object.entries(obj).reduce((acc, [key, value]) => {
-				acc += unKeys.includes(key) ? ` ${value}` : "";
+
+	filterContacts(value) {
+		const contactsList = this.contactsList;
+		const unKeys = ["LastName", "FirstName", "Email", "Company", "Job", "Skype"];
+		contactsList.filter((obj) => {
+			let info = Object.entries(obj).reduce((acc, [key, val]) => {
+				acc += unKeys.includes(key) ? ` ${val}` : "";
 				return acc;
 			}, String());
-			 return info.toLowerCase().indexOf(value) !== -1;
-		})
+			return info.toLowerCase().indexOf(value) !== -1;
+		});
 		const firstId = contactsList.getFirstId();
 		const selectedId = contactsList.getSelectedId();
-		if(!selectedId && firstId){
+		if (!selectedId && firstId) {
 			contactsList.select(firstId);
 			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [true]);
 		}
-		if(!firstId){
+		if (!firstId) {
 			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [false]);
 		}
 	}

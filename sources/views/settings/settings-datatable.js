@@ -27,14 +27,12 @@ export default class SettingsDatatableView extends JetView {
 				{
 					id: "Icon",
 					sort: "string",
-					header: {text:this._("Icon"), css: "activities_columns-center"},
+					header: {text: this._("Icon"), css: "activities_columns-center"},
 					width: 100,
 					css: "activities_columns-center",
-					template: obj => {
-						return `<span class="fas fa-${obj.Icon}">`
-					}
+					template: obj => `<span class="fas fa-${obj.Icon}">`
 				},
-                {
+				{
 					id: "Edit",
 					header: "",
 					css: "activities_columns-center",
@@ -61,7 +59,7 @@ export default class SettingsDatatableView extends JetView {
 			}
 		};
 
-		const addButton= {
+		const addButton = {
 			view: "button",
 			label: this._(`Add${this.buttonValue}`),
 			type: "icon",
@@ -81,7 +79,7 @@ export default class SettingsDatatableView extends JetView {
 					padding: {
 						right: 15
 					},
-					rows:[
+					rows: [
 						addButton
 					]
 				},
