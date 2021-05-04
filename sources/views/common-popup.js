@@ -176,6 +176,8 @@ export default class CommonPopupView extends JetView {
 					data.add(formItem);
 				}
 
+				this.app.callEvent("activitiesDatatable:setDefaultFilterState", []);
+
 				webix.message({
 					text: this._("SuccsessValidation"),
 					type: "success",

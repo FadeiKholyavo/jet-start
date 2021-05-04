@@ -90,6 +90,9 @@ export default class ActivitiesView extends JetView {
 		this.on(this.app, "activitiesDatatable:showPopup", () => {
 			this.popup.showWindow();
 		});
+		this.on(this.app, "activitiesDatatable:setDefaultFilterState", () => {
+			this.activitiesDatatatble.setState({filter: {undefined: "All"}});
+		});
 
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");
 		this.popup = this.ui(new CommonPopup(this.app, "", this.data));
