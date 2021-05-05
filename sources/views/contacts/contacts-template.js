@@ -114,13 +114,13 @@ export default class ContactsTemplateView extends JetView {
 										new ActivitiesDatatable(this.app, "", activities, false),
 										{
 											padding: {
-												right: 15
+												right: 15,
+												bottom: 10
 											},
 											cols: [
 												ActivitiesAddButton
 											]
-										},
-										{height: 10}
+										}
 									]
 								}
 							},

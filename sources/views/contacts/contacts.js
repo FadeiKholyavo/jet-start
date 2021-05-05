@@ -69,11 +69,13 @@ export default class ContactsView extends JetView {
 		const ui = {
 			cols: [
 				{
+					padding:{
+						bottom: 10
+					},
 					rows: [
 						contactsFilter,
 						contactsList,
-						addButton,
-						{height: 10}
+						addButton
 					]
 				},
 				{$subview: true}

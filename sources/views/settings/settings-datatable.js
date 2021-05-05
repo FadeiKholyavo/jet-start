@@ -77,13 +77,13 @@ export default class SettingsDatatableView extends JetView {
 				datatable,
 				{
 					padding: {
-						right: 15
+						right: 15,
+						bottom: 10
 					},
 					rows: [
 						addButton
 					]
-				},
-				{height: 11}
+				}
 			]
 		};
 

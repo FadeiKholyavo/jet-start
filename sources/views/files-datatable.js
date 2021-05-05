@@ -70,10 +70,12 @@ export default class FilesDatatableView extends JetView {
 		};
 
 		const ui = {
+			padding: {
+				bottom: 11
+			},
 			rows: [
 				filesDatatable,
-				filesUploader,
-				{height: 11}
+				filesUploader
 			]
 		};
 
