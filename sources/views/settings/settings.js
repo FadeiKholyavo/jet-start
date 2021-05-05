@@ -10,25 +10,23 @@ export default class SettingsView extends JetView {
 		const lang = this.app.getService("locale").getLang();
 
 		const ui = {
+			padding:{
+				top: 40
+			},
+			margin: 40,
 			rows: [
 				{
-					rows: [
-						{},
-						{
-							view: "segmented",
-							localId: "languageSwitcher",
-							align: "center",
-							options: [
-								{id: "en", value: _("English")},
-								{id: "ru", value: _("Russian")}
-							],
-							inputWidth: 400,
-							label: `${_("Language")}:`,
-							click: () => this.toggleLanguage(),
-							value: lang
-						},
-						{}
-					]
+					view: "segmented",	
+					localId: "languageSwitcher",
+					align: "center",
+					options: [
+						{id: "en", value: _("English")},
+						{id: "ru", value: _("Russian")}
+					],
+					inputWidth: 400,
+					label: `${_("Language")}:`,
+					click: () => this.toggleLanguage(),
+					value: lang
 				},
 				{
 					view: "tabview",
