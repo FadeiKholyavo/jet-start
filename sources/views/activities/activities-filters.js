@@ -31,7 +31,9 @@ export default class ActivitiesFiltersView extends JetView {
 			this.datatable = datatable;
 			this.datatable.registerFilter(
 				this.$$("tabbar"),
+				
 				{
+					columnId: "CustomFilter",
 					compare: (cellValue, filterValue, obj) => {
 						switch (filterValue) {
 							case _("All"):
