@@ -30,7 +30,7 @@ export default class CommonPopupView extends JetView {
 					options: {
 						body: {
 							data: activitiesType,
-							template: "#Value# <span class=\"fas fa-#Icon#\"></span>"
+							template: "<span class=\"fas fa-#Icon#\"></span>  #Value#"
 						}
 					}
 				},

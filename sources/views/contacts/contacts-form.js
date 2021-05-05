@@ -48,7 +48,7 @@ export default class ContactsFormView extends JetView {
 					options: {
 						body: {
 							data: statuses,
-							template: "#Value# <span class=\"fas fa-#Icon#\"></span>"
+							template: "<span class=\"fas fa-#Icon#\"></span> #Value#"
 						}
 					}
 

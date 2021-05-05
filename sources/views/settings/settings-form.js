@@ -29,7 +29,7 @@ export default class PopupFormView extends JetView {
 					options: {
 						body: {
 							data: icons,
-							template: "#value#  <span class=\"fas fa-#value#\"></span>"
+							template: "<span class=\"fas fa-#value#\"></span> #value#"
 						}
 					}
 				},

@@ -39,7 +39,7 @@ export default class ContactsTemplateView extends JetView {
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
                                                 </ul>`;
 							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}`;
-							const userStatus = `<span class="contacts-template_status">${statusValue || "-"} <span class="fas fa-${icon}"></span></span>`;
+							const userStatus = `<span class="contacts-template_status"><span class="fas fa-${icon}"></span> ${statusValue || "-"}</span>`;
 
 							return `<div class="contacts-template">
                                         <div class="contacts-template_first-row">
