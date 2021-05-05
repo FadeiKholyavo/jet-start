@@ -168,14 +168,14 @@ export default class ContactsFormView extends JetView {
 				{
 					view: "text",
 					name: "Email",
-					label: "Email",
+					label: _("Email"),
 					labelWidth: 150,
 					invalidMessage: _("EmailEmptyMessage")
 				},
 				{
 					view: "text",
 					name: "Skype",
-					label: "Skype",
+					label: _("Skype"),
 					labelWidth: 150
 				},
 				{

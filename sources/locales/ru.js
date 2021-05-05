@@ -74,6 +74,8 @@ export default {
 	EmailEmptyMessage: "Email - обязательное поле",
 	LNameEmptyMessage: "Фамилия - обязательное поле",
 	FNameEmptyMessage: "Имя - обязательное поле",
+	Email: "Email",
+	Skype: "Skype",
 	// contacts-template.js
 	Edit: "Редактировать",
 	Delete: "Удалить",

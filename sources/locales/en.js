@@ -73,6 +73,8 @@ export default {
 	EmailEmptyMessage: "Email is a necessary filed",
 	LNameEmptyMessage: "Last name is a necessary filed",
 	FNameEmptyMessage: "First name is a necessary filed",
+	Email: "Email",
+	Skype: "Skype",
 	// contacts-template.js
 	Edit: "Edit",
 	Delete: "Delete",
