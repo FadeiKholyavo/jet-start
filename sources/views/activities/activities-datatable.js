@@ -92,7 +92,6 @@ export default class ActivitiesView extends JetView {
 		});
 		this.on(this.app, "activitiesDatatable:setDefaultFilterState", () => {
 			this.activitiesDatatatble.setState({filter: {CustomFilter: "All"}});
-			console.log(this.activitiesDatatatble.getState())
 		});
 
 		this.activitiesDatatatble = this.$$("activitiesDatatatble");

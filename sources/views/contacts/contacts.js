@@ -70,7 +70,7 @@ export default class ContactsView extends JetView {
 		const ui = {
 			cols: [
 				{
-					padding:{
+					padding: {
 						bottom: 10
 					},
 					rows: [

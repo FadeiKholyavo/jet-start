@@ -10,13 +10,13 @@ export default class SettingsView extends JetView {
 		const lang = this.app.getService("locale").getLang();
 
 		const ui = {
-			padding:{
+			padding: {
 				top: 40
 			},
 			margin: 40,
 			rows: [
 				{
-					view: "segmented",	
+					view: "segmented",
 					localId: "languageSwitcher",
 					align: "center",
 					options: [
@@ -46,7 +46,8 @@ export default class SettingsView extends JetView {
 
 		return ui;
 	}
-	init(){
+
+	init() {
 		this.languageSwitcher = this.$$("languageSwitcher");
 	}
 
