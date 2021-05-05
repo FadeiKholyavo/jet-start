@@ -32,6 +32,7 @@ export default class ContactsView extends JetView {
 			on: {
 				onAfterSelect: (id) => {
 					this.setParam("user", id, true);
+					this.app.callEvent("ContactsTemplate:onAfterContactSelect", [true]);
 				}
 			}
 		};
@@ -152,7 +153,6 @@ export default class ContactsView extends JetView {
 		const selectedId = contactsList.getSelectedId();
 		if (!selectedId && firstId) {
 			contactsList.select(firstId);
-			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [true]);
 		}
 		if (!firstId) {
 			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [false]);
