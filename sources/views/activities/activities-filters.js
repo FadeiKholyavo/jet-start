@@ -27,7 +27,7 @@ export default class ActivitiesFiltersView extends JetView {
 		this.parser = webix.Date.dateToStr("%Y-%m-%d");
 		const _ = this.app.getService("locale")._;
 
-		this.on(this.app, "ActivitiesFilters:getDatatable", (datatable) => {
+		this.on(this.app, "ActivitiesFilters:onAfterDatatableCreate", (datatable) => {
 			this.datatable = datatable;
 			this.datatable.registerFilter(
 				this.$$("tabbar"),
