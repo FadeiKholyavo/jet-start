@@ -16,6 +16,7 @@ export default class SettingsView extends JetView {
 						{},
 						{
 							view: "segmented",
+							localId: "languageSwitcher",
 							align: "center",
 							options: [
 								{id: "en", value: _("English")},
@@ -47,10 +48,13 @@ export default class SettingsView extends JetView {
 
 		return ui;
 	}
+	init(){
+		this.languageSwitcher = this.$$("languageSwitcher");
+	}
 
 	toggleLanguage() {
 		const langs = this.app.getService("locale");
-		const value = this.getRoot().queryView({view: "segmented"}).getValue();
+		const value = this.languageSwitcher.getValue();
 		langs.setLang(value);
 		if (langs.getLang() === "en") {
 			webix.i18n.setLocale("en-US");
