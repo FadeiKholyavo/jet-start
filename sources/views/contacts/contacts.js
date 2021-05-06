@@ -4,6 +4,8 @@ import contacts from "../../models/contacts";
 
 export default class ContactsView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		const contactsList = {
 			view: "list",
 			localId: "contactsList",
@@ -30,18 +32,20 @@ export default class ContactsView extends JetView {
 			on: {
 				onAfterSelect: (id) => {
 					this.setParam("user", id, true);
+					this.app.callEvent("ContactsTemplate:onAfterContactSelect", [true]);
 				}
 			}
 		};
 		const addButton = {
 			view: "button",
 			localId: "addButton",
-			label: "Add contact",
+			label: _("AddContact"),
 			type: "icon",
 			icon: "fas fa-plus-square",
 			css: "custom-button",
 			click: () => {
 				this.contactsList.define({disabled: true});
+				this.contactsFilter.disable();
 				this.addButton.disable();
 				this.show("contacts-form?action=Add").then(() => {
 					contacts.waitData.then(() => {
@@ -51,13 +55,28 @@ export default class ContactsView extends JetView {
 			}
 		};
 
+		const contactsFilter = {
+			view: "text",
+			localId: "contactsFilter",
+			placeholder: _("Placeholder"),
+			on: {
+				onTimedKeyPress() {
+					const value = webix.template.escape(this.getValue().toLowerCase());
+					this.$scope.filterContacts(value);
+				}
+			}
+		};
+
 		const ui = {
 			cols: [
 				{
+					padding: {
+						bottom: 10
+					},
 					rows: [
+						contactsFilter,
 						contactsList,
-						addButton,
-						{height: 10}
+						addButton
 					]
 				},
 				{$subview: true}
@@ -68,15 +87,28 @@ export default class ContactsView extends JetView {
 
 	init() {
 		this.contactsList = this.$$("contactsList");
+		this.contactsFilter = this.$$("contactsFilter");
 		this.contactsList.sync(contacts);
 		this.addButton = this.$$("addButton");
 
 		this.on(this.app, "Contacts:onAfterContactAdd", (obj) => {
-			this.contactsList.define({disabled: false});
+			this.contactsList.define({
+				disabled: false,
+				select: true
+			});
+			this.contactsFilter.enable();
 			this.addButton.enable();
 			if (obj) {
 				this.contactsList.select(obj.id);
 			}
+		});
+		this.on(this.app, "Contacts:onAfterGetListFirstId", (contactsFirstId) => {
+			this.contactsList.select(contactsFirstId);
+		});
+		this.on(this.app, "Contacts:onContactEdit", () => {
+			this.contactsList.define({select: false});
+			this.addButton.disable();
+			this.contactsFilter.disable();
 		});
 	}
 
@@ -105,6 +137,26 @@ export default class ContactsView extends JetView {
 				this.contactsList.select(contacts.getFirstId());
 			}
 		});
+	}
+
+	filterContacts(value) {
+		const contactsList = this.contactsList;
+		const unKeys = ["LastName", "FirstName", "Email", "Company", "Job", "Skype"];
+		contactsList.filter((obj) => {
+			let info = Object.entries(obj).reduce((acc, [key, val]) => {
+				acc += unKeys.includes(key) ? ` ${val}` : "";
+				return acc;
+			}, String());
+			return info.toLowerCase().indexOf(value) !== -1;
+		});
+		const firstId = contactsList.getFirstId();
+		const selectedId = contactsList.getSelectedId();
+		if (!selectedId && firstId) {
+			contactsList.select(firstId);
+		}
+		if (!firstId) {
+			this.app.callEvent("ContactsTemplate:onAfterContactSelect", [false]);
+		}
 	}
 }
 

@@ -1,10 +1,6 @@
 import {JetView} from "webix-jet";
 
-import activitiesType from "../models/activities-type";
-import contacts from "../models/contacts";
-
-
-export default class CommonPopupView extends JetView {
+export default class PopupFormView extends JetView {
 	constructor(app, name, data) {
 		super(app, name);
 		this.data = data;
@@ -12,61 +8,30 @@ export default class CommonPopupView extends JetView {
 	}
 
 	config() {
+		const icons = ["pen", "flag", "clock", "phone", "comment", "cogs", "user", "plus", "wrench", "pause", "bed", "futbol", "passport", "walking", "wine-glass-alt", "utensils", "car", "plane"];
 		const form = {
 			view: "form",
 			localId: "form",
 			elements: [
 				{
-					view: "textarea",
-					name: "Details",
-					label: this._("Details"),
-					height: 100
+					view: "text",
+					name: "Value",
+					label: this._("Value"),
+					labelWidth: 100,
+					invalidMessage: this._("NameCannotBeEmpty")
 				},
 				{
 					view: "richselect",
-					name: "TypeID",
-					label: this._("Type"),
-					invalidMessage: this._("TypeEmptyMessage"),
+					name: "Icon",
+					label: this._("Icon"),
+					labelWidth: 100,
+					invalidMessage: this._("IconCannotBeEmpty"),
 					options: {
 						body: {
-							data: activitiesType,
-							template: "<span class=\"fas fa-#Icon#\"></span>  #Value#"
+							data: icons,
+							template: "<span class=\"fas fa-#value#\"></span> #value#"
 						}
 					}
-				},
-				{
-					view: "richselect",
-					name: "ContactID",
-					localId: "ContactID",
-					label: this._("Contact"),
-					invalidMessage: this._("ContactEmptyMessage"),
-					options: contacts
-				},
-				{
-					margin: 30,
-					cols: [
-						{
-							view: "datepicker",
-							name: "Date",
-							label: this._("Date"),
-							format: ("%j %F %Y")
-						},
-						{
-							view: "datepicker",
-							type: "time",
-							name: "Time",
-							label: this._("Time"),
-							format: "%H:%i"
-						}
-					]
-				},
-				{
-					view: "checkbox",
-					name: "State",
-					uncheckValue: "Open",
-					checkValue: "Close",
-					labelRight: this._("Complited"),
-					labelWidth: 0
 				},
 				{
 					cols: [
@@ -100,14 +65,14 @@ export default class CommonPopupView extends JetView {
 				}
 			],
 			rules: {
-				TypeID: webix.rules.isNotEmpty,
-				ContactID: webix.rules.isNotEmpty
+				Value: webix.rules.isNotEmpty,
+				Icon: webix.rules.isNotEmpty
 			}
 		};
 		const popup = {
 			view: "window",
 			position: "center",
-			head: `${this.activityName}`,
+			head: `${this.popupHeader}`,
 			modal: true,
 			maxWidth: 700,
 			body: form
@@ -117,27 +82,16 @@ export default class CommonPopupView extends JetView {
 	}
 
 	init() {
-		const contactId = this.getParam("user", true);
 		this.form = this.$$("form");
-		this.contactReachSelect = this.$$("ContactID");
-
-		if (contactId) {
-			this.contactReachSelect.define({
-				readonly: true,
-				value: contactId
-			});
-		}
-
 		if (this.item) {
-			this.item.Time = this.item.DueDate;
-			this.item.Date = this.item.DueDate;
 			this.form.setValues(this.item);
 		}
 	}
 
-	showWindow(settings, item) {
+	showWindow(settings, item, name) {
+		this.name = name;
 		this.activityName = (settings && "Edit") || "Add";
-		this.activityName = this._(`${this.activityName}Activity`);
+		this.popupHeader = this._(`${this.activityName}${this.name}`);
 		this.buttonName = this._((settings && "Save") || "Add");
 		this.item = item;
 		this.refresh();
@@ -163,15 +117,7 @@ export default class CommonPopupView extends JetView {
 
 			if (form.isDirty()) {
 				// Protection against XSS
-				formItem.Details = webix.template.escape(formItem.Details);
-
-				const time = webix.i18n.dateFormatDate(formItem.Time) || new Date();
-				const date = webix.i18n.dateFormatDate(formItem.Date) || new Date();
-				formItem.DueDate = new Date(
-					date.getFullYear(),
-					date.getMonth(), date.getDate(),
-					time.getHours(), time.getMinutes()
-				);
+				formItem.Value = webix.template.escape(formItem.Value);
 
 				if (data.exists(formItemId)) {
 					form.setDirty(false);
@@ -180,8 +126,6 @@ export default class CommonPopupView extends JetView {
 				else {
 					data.add(formItem);
 				}
-
-				this.app.callEvent("activitiesDatatable:setDefaultFilterState", []);
 
 				webix.message({
 					text: this._("SuccsessValidation"),

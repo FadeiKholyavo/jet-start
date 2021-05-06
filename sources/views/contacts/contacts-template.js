@@ -10,6 +10,8 @@ import FilesDatatable from "../files-datatable";
 
 export default class ContactsTemplateView extends JetView {
 	config() {
+		const _ = this.app.getService("locale")._;
+
 		return statuses.waitData.then(() => {
 			const contactTemplate = {
 				cols: [
@@ -22,6 +24,7 @@ export default class ContactsTemplateView extends JetView {
 						template(obj) {
 							const statusItem = statuses.getItem(obj.StatusID);
 							const statusValue = obj && obj.StatusID && statusItem && statusItem.Value;
+							const icon = statusItem && statusItem.Icon;
 							const userName = `<span class="contacts-template_name">
 												${(obj && obj.FirstName) || "-"} ${(obj && obj.LastName) || "-"}
 											</span>`;
@@ -36,7 +39,7 @@ export default class ContactsTemplateView extends JetView {
                                                     <li><span class="fas fa-map-marker-alt"></span>${(obj && obj.Address) || "-"}</li>
                                                 </ul>`;
 							const userPhoto = `${(obj && obj.Photo && `<img src="${obj.Photo}">`) || "<span class=\"far fa-user\"></span>"}`;
-							const userStatus = `<span class="contacts-template_status">${statusValue || "-"}</span>`;
+							const userStatus = `<span class="contacts-template_status"><span class="fas fa-${icon}"></span> ${statusValue || "-"}</span>`;
 
 							return `<div class="contacts-template">
                                         <div class="contacts-template_first-row">
@@ -51,7 +54,7 @@ export default class ContactsTemplateView extends JetView {
                                             </div>     
                                         </div>     
                                         <div class="contacts-template_third-row">
-                                            ${userStatus}
+                                            ${userStatus} 
                                         </div>
                                     </div> 
                                     </div>`;
@@ -69,7 +72,7 @@ export default class ContactsTemplateView extends JetView {
 								cols: [
 									{
 										view: "button",
-										label: "Delete",
+										label: _("Delete"),
 										css: "custom-button",
 										type: "icon",
 										icon: "fas fa-trash-alt",
@@ -80,13 +83,13 @@ export default class ContactsTemplateView extends JetView {
 									},
 									{
 										view: "button",
-										label: "Edit",
+										label: _("Edit"),
 										css: "custom-button",
 										type: "icon",
 										icon: "fas fa-edit",
 										autowidth: true,
 										click: () => {
-											this.contactList.define({select: false});
+											this.app.callEvent("Contacts:onContactEdit", []);
 											this.show(`contacts-form?action=Edit&user=${this.getParam("user", true)}`);
 										}
 									}
@@ -98,30 +101,31 @@ export default class ContactsTemplateView extends JetView {
 				]
 			};
 			const ui = {
+				localId: "contactsWindow",
 				rows: [
 					contactTemplate,
 					{
 						view: "tabview",
 						cells: [
 							{
-								header: "Activities",
+								header: _("Activities"),
 								body: {
 									rows: [
 										new ActivitiesDatatable(this.app, "", activities, false),
 										{
 											padding: {
-												right: 15
+												right: 15,
+												bottom: 10
 											},
 											cols: [
 												ActivitiesAddButton
 											]
-										},
-										{height: 10}
+										}
 									]
 								}
 							},
 							{
-								header: "Files",
+								header: _("Files"),
 								body: new FilesDatatable(this.app, "", files)
 							}
 						]
@@ -136,6 +140,15 @@ export default class ContactsTemplateView extends JetView {
 	init() {
 		this.contactsTemplate = this.$$("contactsTemplate");
 		this.contactList = this.getParentView().contactsList;
+
+		this.on(this.app, "ContactsTemplate:onAfterContactSelect", (flag) => {
+			if (flag) {
+				this.$$("contactsWindow").show();
+			}
+			else {
+				this.$$("contactsWindow").hide();
+			}
+		});
 	}
 
 	urlChange() {
@@ -148,9 +161,10 @@ export default class ContactsTemplateView extends JetView {
 	}
 
 	deleteContact() {
+		const _ = this.app.getService("locale")._;
 		webix.confirm({
-			title: "Contact deleting",
-			text: "Do you really want to delete this contact?"
+			title: _("ContactDeleting"),
+			text: _("ContactDelMessage")
 		}).then(() => {
 			const idParam = this.getParam("user", true);
 			const contact = contacts.getItem(idParam);
@@ -164,7 +178,7 @@ export default class ContactsTemplateView extends JetView {
 
 				const contactsFirstId = contacts.getFirstId();
 				if (contactsFirstId) {
-					this.getParentView().contactsList.select(contactsFirstId);
+					this.app.callEvent("Contacts:onAfterGetListFirstId", [contactsFirstId]);
 				}
 				else {
 					this.show("contacts-form?action=Add new");
